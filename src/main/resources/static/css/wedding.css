@@ -1,279 +1,131 @@
 :root {
-    --bg-color: #fbf5f5;          /* Пастельный светло-розовый фон страницы */
-    --primary-pink: #fbcbc9;      /* Пастельный светло-розовый (основной) */
-    --primary-green: #d1e2d3;     /* Пастельный светло-зеленый (акцентный) */
-    --text-brown: #5c4a43;        /* Коричневый для текста */
-    --card-bg: #ffffff;           /* Белый */
-    --input-border: #e2d9d5;
+    --bg-color: #fcf9f9;
+    /* Ультра-современная благородная пастель */
+    --primary-pink: #f9d8d6;
+    --primary-green: #e2ebd5;
+    --dark-green: #3d5249;         /* Глубокий цвет для важных акцентов */
+    --text-main: #3e322d;          /* Мягкий графитово-коричневый */
+    --glass-bg: rgba(255, 255, 255, 0.75);
+    --glass-border: rgba(255, 255, 255, 0.6);
 }
 
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: 'Montserrat', sans-serif;
 }
 
 body {
-    font-family: 'Montserrat', sans-serif;
-    background-color: var(--bg-color);
-    color: var(--text-brown);
+    background: radial-gradient(circle at 10% 20%, rgba(249, 216, 214, 0.2) 0%, rgba(226, 235, 213, 0.2) 90%), var(--bg-color);
+    color: var(--text-main);
     line-height: 1.6;
-    padding: 40px 20px;
+    padding: 60px 20px;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
 }
 
-/* Элегантная карточка приглашения */
-.invitation-card {
-    background: var(--card-bg);
-    padding: 50px 40px;
-    border-radius: 16px;
-    max-width: 550px;
+/* Элегантная бэнто-карточка (Bento Grid Style) */
+.invitation-card, .login-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    padding: 60px 45px;
+    border-radius: 32px; /* Трендовые крупные скругления */
+    max-width: 600px;
     width: 100%;
     text-align: center;
-    box-shadow: 0 10px 30px rgba(92, 74, 67, 0.05);
-    border: 4px solid var(--primary-pink);
+    box-shadow: 0 30px 70px rgba(92, 74, 67, 0.07),
+                0 10px 20px rgba(0, 0, 0, 0.02);
+    border: 1px solid var(--glass-border);
     position: relative;
-    animation: fadeInUp 1.2s ease-out forwards;
+    animation: cubicBezierUp 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     opacity: 0;
 }
 
 .invitation-card::before {
-    content: "🌸";
-    font-size: 24px;
+    content: "✦";
+    color: var(--dark-green);
+    font-size: 20px;
     display: block;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    opacity: 0.5;
 }
 
 h1 {
     font-family: 'Playfair Display', serif;
-    font-size: 2.8rem;
-    color: var(--text-brown);
+    font-size: 3.2rem;
     font-weight: 400;
-    margin-bottom: 5px;
-    letter-spacing: 1px;
+    color: var(--dark-green);
+    letter-spacing: -0.5px;
+    margin-bottom: 8px;
 }
 
 .subtitle {
-    font-family: 'Playfair Display', serif;
-    font-style: italic;
-    font-size: 1.3rem;
-    color: var(--text-brown);
-    margin-bottom: 30px;
-    opacity: 0.8;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 500;
+    color: var(--text-main);
+    opacity: 0.6;
+    margin-bottom: 45px;
 }
 
-/* Контейнер таймера */
+/* Модульный блок таймера в стиле Bento */
 .timer-container {
-    margin-bottom: 35px;
-    padding: 15px;
-    background-color: var(--bg-color);
-    border-radius: 8px;
-    border: 1px dashed var(--primary-green);
+    margin-bottom: 40px;
+    padding: 24px;
+    background: linear-gradient(135deg, rgba(249, 216, 214, 0.4) 0%, rgba(226, 235, 213, 0.4) 100%);
+    border-radius: 24px;
+    border: 1px solid var(--glass-border);
 }
 
 .timer-title {
-    font-size: 0.85rem;
+    font-size: 0.75rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
-    margin-bottom: 10px;
-    font-weight: 500;
-    color: var(--text-brown);
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    font-weight: 600;
+    opacity: 0.7;
 }
 
 .timer-countdown {
     display: flex;
     justify-content: center;
-    gap: 15px;
+    gap: 20px;
 }
 
 .timer-segment {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-width: 60px;
+    min-width: 70px;
 }
 
 .timer-number {
     font-family: 'Playfair Display', serif;
-    font-size: 1.8rem;
-    font-weight: 600;
-    color: var(--text-brown);
-    background: var(--card-bg);
-    width: 100%;
-    padding: 5px 0;
-    border-radius: 6px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+    font-size: 2.2rem;
+    font-weight: 500;
+    color: var(--dark-green);
 }
 
 .timer-label {
     font-size: 0.7rem;
-    margin-top: 5px;
-    text-transform: lowercase;
-    opacity: 0.8;
-}
-
-/* Информационный блок */
-.details-section {
-    margin-bottom: 35px;
-    border-top: 1px solid var(--primary-pink);
-    border-bottom: 1px solid var(--primary-pink);
-    padding: 20px 0;
-    text-align: left;
-}
-
-.details-section p {
-    margin: 10px 0;
-    font-size: 0.95rem;
-}
-
-.details-section strong {
-    font-weight: 500;
-    background: linear-gradient(180deg, transparent 60%, var(--primary-green) 40%);
-}
-
-.map-link {
-    display: inline-block;
-    margin-top: 10px;
-    font-size: 0.85rem;
-    color: var(--text-brown);
-    text-decoration: none;
-    border-bottom: 1px dashed var(--text-brown);
-    transition: opacity 0.3s ease;
-}
-
-.map-link:hover {
-    opacity: 0.7;
-}
-
-h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: var(--text-brown);
-    margin-bottom: 20px;
-    text-align: center;
-}
-
-/* Элементы формы */
-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    text-align: left;
-}
-
-input[type="text"], .login-input, select, textarea {
-    width: 100%;
-    padding: 12px 15px;
-    border: 1px solid var(--input-border);
-    border-radius: 8px;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-    background-color: #fdfdfd;
-    color: var(--text-brown);
-}
-
-/* Не забудьте обновить и эффект фокуса */
-input[type="text"]:focus, .login-input:focus, select:focus, textarea:focus {
-    outline: none;
-    border-color: var(--primary-green);
-    background-color: #fff;
-    box-shadow: 0 0 8px rgba(209, 226, 211, 0.5);
-}
-
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    user-select: none;
-}
-
-.checkbox-container input {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--text-brown);
-}
-
-textarea {
-    resize: vertical;
-    min-height: 80px;
-}
-
-/* Кнопка */
-button {
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
+    text-transform: uppercase;
     letter-spacing: 1px;
-    background-color: var(--primary-green);
-    color: var(--text-brown);
-    padding: 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    margin-top: 10px;
-    box-shadow: 0 4px 10px rgba(209, 226, 211, 0.4);
-    width: 100%;
+    margin-top: 4px;
+    opacity: 0.5;
 }
 
-button:hover {
-    background-color: #bdcfbe;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 14px rgba(209, 226, 211, 0.6);
-}
-
-button:active {
-    transform: translateY(0);
-}
-
-/* Сообщение об успешной отправке */
-.success-message {
-    display: none;
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    margin-top: 20px;
-    animation: fadeIn 0.5s ease-in forwards;
-}
-
-/* Анимации */
-@keyframes fadeInUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-/* Контейнер интерактивной карты */
-.map-container {
-    margin-top: 20px;
-    width: 100%;
-    border-radius: 12px;       /* Скругление углов в тон основной карточке */
-    overflow: hidden;          /* Маскирует острые углы самого iframe */
-    border: 1px solid var(--primary-pink); /* Тонкая пастельная розовая обводка */
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
-}
-
-.map-container iframe {
-    display: block;
-    background-color: var(--bg-color);
-}
-
-/* Новые стили для фотоблоков */
+/* Фото-контейнеры без рамок с мягким закруглением */
 .photo-block {
     width: 100%;
-    margin: 20px 0 35px 0;
-    border-radius: 12px;
+    margin: 25px 0 45px 0;
+    border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 4px 15px rgba(92, 74, 67, 0.08);
-    border: 1px solid var(--primary-pink);
+    box-shadow: 0 20px 40px rgba(92, 74, 67, 0.05);
 }
 
 .wedding-img {
@@ -281,79 +133,169 @@ button:active {
     height: auto;
     display: block;
     object-fit: cover;
+    transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.dresscode-section {
+.photo-block:hover .wedding-img {
+    transform: scale(1.03); /* Мягкий интерактивный зум фото при наведении */
+}
+
+/* Информационные секции */
+.details-section, .dresscode-section, .wishes-section {
     margin-bottom: 45px;
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--primary-pink);
-}
-
-.dresscode-section h3 {
-    margin-bottom: 10px;
-}
-
-/* Стили для текстового описания дресс-кода */
-.dresscode-text-block {
     text-align: left;
-    margin-top: -20px; /* Сближаем текстовое описание с блоком фотографии дресс-кода */
-    margin-bottom: 45px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid var(--primary-pink);
 }
 
-.dresscode-text-block p {
-    font-size: 0.95rem;
-    margin-bottom: 12px;
-    color: var(--text-brown);
-    opacity: 0.9;
+.details-section p, .dresscode-text-block p, .wishes-section p {
+    font-size: 1rem;
+    color: var(--text-main);
+    opacity: 0.85;
+    margin-bottom: 14px;
 }
 
-/* Стили для блока пожеланий по подаркам */
-.wishes-section {
-    text-align: left;
-    margin-bottom: 45px;
-    padding-bottom: 25px;
-    border-bottom: 1px solid var(--primary-pink);
+.details-section strong {
+    font-weight: 600;
+    color: var(--dark-green);
 }
 
-.wishes-section h3 {
-    margin-bottom: 15px;
+/* Минималистичный премиальный виджет карты */
+.map-container {
+    margin-top: 25px;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.03);
+    border: 1px solid var(--glass-border);
+}
+
+.map-container iframe {
+    display: block;
+}
+
+h3 {
     font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: var(--text-brown);
-    text-align: center;
+    font-size: 1.8rem;
+    color: var(--dark-green);
+    margin-bottom: 20px;
+    font-weight: 400;
 }
 
-.wishes-section p {
-    font-size: 0.95rem;
-    margin-bottom: 15px;
-    color: var(--text-brown);
-    opacity: 0.9;
-}
-
-/* Красивый список с кастомными пастельными маркерами */
+/* Кастомный современный список */
 .wishes-list {
-    list-style: none; /* Убираем стандартные маркеры */
-    padding-left: 5px;
+    list-style: none;
 }
 
 .wishes-list li {
     position: relative;
-    padding-left: 25px;
-    margin-bottom: 12px;
-    font-size: 0.9rem;
-    line-height: 1.5;
-    color: var(--text-brown);
+    padding-left: 28px;
+    margin-bottom: 16px;
+    font-size: 0.95rem;
+    opacity: 0.85;
 }
 
-/* Кастомная розовая точка-маркер перед каждым пунктом */
 .wishes-list li::before {
-    content: "•";
+    content: "✦";
     position: absolute;
-    left: 5px;
-    top: -2px;
+    left: 4px;
+    top: 1px;
     color: var(--primary-pink);
-    font-size: 1.5rem;
-    line-height: 1;
+    font-size: 0.9rem;
+}
+
+/* Премиальная форма входа и RSVP */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    text-align: left;
+}
+
+/* Поля ввода в стиле Минимализм */
+input[type="text"], .login-input, select, textarea {
+    width: 100%;
+    padding: 16px 20px;
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    border-radius: 14px;
+    font-size: 0.95rem;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    background-color: rgba(255, 255, 255, 0.6);
+    color: var(--text-main);
+}
+
+input[type="text"]:focus, .login-input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--dark-green);
+    background-color: #fff;
+    box-shadow: 0 10px 25px rgba(61, 82, 73, 0.05);
+}
+
+/* Кнопки с нео-эффектом */
+button {
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    background-color: var(--dark-green);
+    color: #ffffff;
+    padding: 18px;
+    border: none;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    margin-top: 10px;
+    box-shadow: 0 12px 30px rgba(61, 82, 73, 0.15);
+}
+
+button:hover {
+    background-color: #2b3a33;
+    transform: translateY(-2px);
+    box-shadow: 0 18px 40px rgba(61, 82, 73, 0.25);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* Чекбоксы */
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+.checkbox-container input {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--dark-green);
+    border-radius: 6px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Трендовое слияние анимации (Плавный всплеск кинетики) */
+@keyframes cubicBezierUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.98);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+.success-message {
+    display: none;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--dark-green);
+    margin-top: 30px;
+    animation: cubicBezierUp 0.8s ease forwards;
 }

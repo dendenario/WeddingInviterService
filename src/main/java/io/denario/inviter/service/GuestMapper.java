@@ -9,23 +9,25 @@ public class GuestMapper {
 
     public GuestEntity toEntity(GuestDto dto) {
         if (dto == null) return null;
-
         return GuestEntity.builder()
                 .id(dto.getId())
                 .name(dto.getName())
-                .attending(dto.getAttending())
+                .token(dto.getToken())
+                .completedRsvp(dto.getCompletedRsvp() != null ? dto.getCompletedRsvp() : false)
+                .attending(dto.getAttending() != null ? dto.getAttending() : false)
                 .alcoholPreference(dto.getAlcoholPreference())
-                .shuttleRequired(dto.getShuttleRequired())
+                .shuttleRequired(dto.getShuttleRequired() != null ? dto.getShuttleRequired() : false)
                 .commentary(dto.getCommentary())
                 .build();
     }
 
     public GuestDto toDto(GuestEntity entity) {
         if (entity == null) return null;
-
         return GuestDto.builder()
                 .id(entity.getId())
                 .name(entity.getName())
+                .token(entity.getToken())
+                .completedRsvp(entity.isCompletedRsvp())
                 .attending(entity.isAttending())
                 .alcoholPreference(entity.getAlcoholPreference())
                 .shuttleRequired(entity.isShuttleRequired())

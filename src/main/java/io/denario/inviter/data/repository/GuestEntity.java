@@ -1,10 +1,8 @@
 package io.denario.inviter.data.repository;
 
+
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "guests")
@@ -19,16 +17,16 @@ public class GuestEntity {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String name; // Вы заносите имя сами: "Дядя Саша", "Маша и Артем"
+
+    @Column(unique = true, nullable = false)
+    private String token; // Уникальный UUID код для ссылки
 
     @Column(nullable = false)
+    private boolean completedRsvp; // true = гость уже заполнил анкету
+
     private boolean attending;
-
-    @Column(name = "alcohol_preference")
-    private String alcoholPreference; // Крепкие, не крепкие, не пью
-
-    @Column(name = "shuttle_required")
-    private boolean shuttleRequired; // true = нужен трансфер
-
+    private String alcoholPreference;
+    private boolean shuttleRequired;
     private String commentary;
 }

@@ -5,12 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
@@ -20,24 +16,17 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(AbstractHttpConfigurer::disable) // Отключаем для простоты работы AJAX-запросов
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/css/**", "/js/**", "/images/**", "/api/rsvp", "/login").permitAll()
-                        .requestMatchers("/admin/**", "/api/rsvp/list").hasRole("ADMIN") // Админка только для ADMIN
-                        .requestMatchers("/").hasAnyRole("USER", "ADMIN") // Главная страница доступна USER и ADMIN
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/api/rsvp", "/invite/**").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN") // Пароль нужен только вам
                         .anyRequest().authenticated()
                 )
                 .formLogin(login -> login
-                        .loginPage("/login") // Указываем наш URL для входа
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login")
+                        .loginPage("/login")
+                        .defaultSuccessUrl("/admin", true) // Админа сразу кидает в панель
                         .permitAll()
                 );
-
         return http.build();
     }
 

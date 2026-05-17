@@ -6,8 +6,12 @@ import org.jspecify.annotations.Nullable;
 import java.util.List;
 
 public interface GuestService {
-    void save(GuestDto dto);
+    void saveRsvp(GuestDto dto);
 
     @Nullable
     List<GuestDto> getAllGuests();
+
+    void addNewGuest(String name); // Создание гостя
+    void deleteGuest(Long id);     // Удаление гостя
+    GuestDto getGuestByToken(String token); // Поиск для контроллера страниц
 }

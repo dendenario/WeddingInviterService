@@ -44,7 +44,7 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
     submitButton.innerText = 'Отправка...';
 
     const data = {
-        name: document.getElementById('name').value,
+        token: document.getElementById('guestTokenHolder').getAttribute('data-token'),
         attending: document.getElementById('attending').checked,
         alcoholPreference: document.getElementById('alcohol').value,
         shuttleRequired: document.getElementById('shuttle').checked,

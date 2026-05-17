@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org" lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Приглашение на свадьбу Дениса и Марии</title>
+
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+          rel="stylesheet">
+
+    <link th:href="@{/css/wedding.css}" rel="stylesheet">
+</head>
+<body>
+
+<div class="invitation-card">
+    <h1 th:text="${names}">Денис & Мария</h1>
+    <div class="subtitle">Приглашение на свадьбу</div>
+
+    <!-- Скрытый блок даты для JS -->
+    <div id="weddingIsoTimestamp" th:data-iso="${targetIsoDateTime}" style="display: none;"></div>
+
+    <!-- Новое: Главное фото молодоженов -->
+    <div class="photo-block animate-fade">
+        <img th:src="@{/images/couple.jpg}" alt="Денис и Мария" class="wedding-img">
+    </div>
+
+    <!-- Таймер -->
+    <div class="timer-container">
+        <div class="timer-title">До торжества осталось:</div>
+        <div class="timer-countdown" id="countdown">
+            <div class="timer-segment">
+                <span class="timer-number" id="days">00</span>
+                <span class="timer-label">дней</span>
+            </div>
+            <div class="timer-segment">
+                <span class="timer-number" id="hours">00</span>
+                <span class="timer-label">часов</span>
+            </div>
+            <div class="timer-segment">
+                <span class="timer-number" id="minutes">00</span>
+                <span class="timer-label">минут</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Детали проведения -->
+    <div class="details-section">
+        <p style="text-align: center; margin-bottom: 15px; font-style: italic;">Разделите с нами этот счастливый
+            день!</p>
+        <p>📅 Дата: <strong th:text="${weddingDate}">25 Сентября 2026</strong></p>
+        <p>🏰 Место: <strong th:text="${weddingVenue}">Ресторан "Кедр"</strong></p>
+        <p>📍 Адрес: <span th:text="${weddingAddress}">Сосновая ул., Зайцево, Московская обл., 143390</span></p>
+
+        <!-- Интерактивная карта -->
+        <div class="map-container">
+            <iframe th:src="@{https://yandex.ru/map-widget/v1/(mode='search',z=19,text=${weddingVenue + ' ' + weddingAddress})}"
+                    width="100%"
+                    height="280"
+                    frameborder="0"
+                    allowfullscreen="true">
+            </iframe>
+        </div>
+    </div>
+
+    <!-- Новое: Блок дресс-кода -->
+    <div class="dresscode-section">
+        <h3>Дресс-код торжества</h3>
+        <p style="font-size: 0.9rem; margin-bottom: 15px; font-style: italic;">Будем признательны, если при выборе
+            нарядов вы поддержите палитру нашей свадьбы:</p>
+        <div class="photo-block">
+            <img th:src="@{/images/dresscode.jpg}" alt="Палитра дресс-кода" class="wedding-img">
+        </div>
+    </div>
+
+    <!-- Текстовое описание дресс-кода -->
+    <div class="dresscode-text-block" th:utext="${dresscodeText}">
+        <!-- Текст подгрузится динамически -->
+    </div>
+
+    <!-- Блок пожеланий по подаркам -->
+    <div class="wishes-section">
+        <h3>Пожелания по подаркам</h3>
+        <p>Ваше внимание — самый главный подарок! Но если вы хотите сделать нам приятное:</p>
+        <ul class="wishes-list" th:utext="${wishesText}">
+            <!-- Элементы <li> подгрузятся динамически -->
+        </ul>
+    </div>
+
+    <!-- Храним токен гостя для передачи в JS -->
+    <div id="guestTokenHolder" th:data-token="${guestToken}" style="display: none;"></div>
+
+    <div id="formContainer" th:if="${!completedRsvp}">
+        <!-- Персональное приветствие -->
+        <h3><span th:text="${guestName}">Дорогой гость</span>, подтвердите свое участие:</h3>
+        <form id="rsvpForm">
+            <label class="checkbox-container">
+                <input type="checkbox" id="attending" checked>
+                <span>Я смогу присутствовать</span>
+            </label>
+
+            <div>
+                <select id="alcohol">
+                    <option value="Не определено">Предпочтения по напиткам</option>
+                    <option value="Крепкие напитки">Предпочитаю крепкие напитки</option>
+                    <option value="Не крепкие напитки">Предпочитаю легкие/не крепкие напитки</option>
+                    <option value="Не пью алкоголь">Я не пью алкоголь</option>
+                </select>
+            </div>
+
+            <label class="checkbox-container" style="margin-top: 5px;">
+                <input type="checkbox" id="shuttle">
+                <span>Мне нужен трансфер от метро "Рассказовка"</span>
+            </label>
+
+            <div>
+                <textarea id="commentary" placeholder="Пожелания, аллергии или особые примечания"></textarea>
+            </div>
+
+            <button type="submit">Отправить ответ</button>
+        </form>
+    </div>
+
+    <div id="successMessage" class="success-message">
+        <p>✨ Ваш ответ успешно сохранен!</p>
+        <p style="font-size: 1rem; font-family: 'Montserrat', sans-serif; margin-top: 10px; color: var(--text-brown); opacity: 0.9;">
+            Спасибо, что будете с нами в этот важный день.
+        </p>
+    </div>
+</div>
+
+<script th:src="@{/js/wedding.js}" defer></script>
+
+</body>
+</html>

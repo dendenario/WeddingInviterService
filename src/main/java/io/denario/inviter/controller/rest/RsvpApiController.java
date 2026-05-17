@@ -19,7 +19,7 @@ public class RsvpApiController {
 
     @PostMapping
     public ResponseEntity<String> submitRsvp(@Valid @RequestBody GuestDto guestDto) {
-        guestService.save(guestDto);
+        guestService.saveRsvp(guestDto);
         return ResponseEntity.ok("Ответ успешно сохранен! Ждем вас.");
     }
 
