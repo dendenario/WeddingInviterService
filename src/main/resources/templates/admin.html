@@ -2,30 +2,23 @@
 <html xmlns:th="http://thymeleaf.org" lang="ru">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Панель организатора — Денис и Мария</title>
-    <link href="https://googleapis.com" rel="stylesheet">
-    <!-- Подключаем общие премиальные стили бэнто-гамы -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Подключение единой пастельной дизайн-системы -->
     <link th:href="@{/css/wedding.css}" rel="stylesheet">
-    <style>
-        body { padding: 40px; display: block; background: #fbf5f5; }
-        .admin-container { max-width: 1100px; margin: 0 auto; background: #fff; padding: 40px; border-radius: 24px; border: 1px solid rgba(0,0,0,0.05); box-shadow: 0 20px 50px rgba(0,0,0,0.02); }
-        .bento-section { margin-bottom: 35px; padding: 25px; background: rgba(0,0,0,0.01); border-radius: 16px; border: 1px solid rgba(0,0,0,0.03); }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th, td { padding: 14px; text-align: left; border-bottom: 1px solid #f0f0f0; font-size: 14px; }
-        th { background: var(--primary-green); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
-        .btn-del { background: #fce4d6; color: #c65911; padding: 6px 12px; border: none; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: 600; }
-        .btn-del:hover { background: #f8cbad; }
-        .link-input { font-size: 12px; padding: 6px; width: 180px; background: #fafafa; border: 1px solid #eee; border-radius: 4px; }
-    </style>
 </head>
 <body>
 
 <div class="admin-container">
-    <h1 style="text-align: center; margin-bottom: 40px;">Панель управления свадьбой</h1>
+    <h1>Панель управления свадьбой</h1>
+    <div class="subtitle" style="text-align: center;">Денис & Мария</div>
 
-    <!-- 1. Сводная статистика Бэнто -->
-    <div class="timer-container"
-         style="display: flex; gap: 20px; text-align: center; background: linear-gradient(135deg, rgba(249, 216, 214, 0.2), rgba(226, 235, 213, 0.2));">
+    <!-- Модульная статистика Бэнто -->
+    <div class="timer-container" style="display: flex; gap: 30px; text-align: center; margin-bottom: 40px;">
         <div style="flex: 1;">
             <div class="timer-title">Будет гостей</div>
             <div class="timer-number" th:text="${totalAttending}">0</div>
@@ -36,45 +29,41 @@
         </div>
     </div>
 
-    <!-- 2. Форма добавления гостей -->
+    <!-- Контроль списка: Добавление гостей -->
     <div class="bento-section">
-        <h3 style="font-size: 18px; margin-bottom: 15px;">Добавить приглашенных</h3>
+        <div class="timer-title">Управление приглашенными</div>
         <form th:action="@{/admin/guest/add}" method="post"
-              style="display: flex; flex-direction: row; gap: 15px; align-items: center;">
-            <input type="text" name="name" placeholder="Имя гостя или формулировка (например: Маша и Артем)" required
-                   style="flex: 1; padding: 12px;">
-            <button type="submit" style="margin-top: 0; padding: 12px 25px; font-size: 14px;">Добавить</button>
+              style="flex-direction: row; gap: 15px; align-items: center; margin-top: 10px;">
+            <input type="text" name="name" placeholder="Имя гостя (например: Маша и Артем)" required style="flex: 1;">
+            <button type="submit" style="margin-top: 0; width: auto; padding: 14px 30px;">Добавить</button>
         </form>
     </div>
 
-    <!-- 3. Редактор текстов -->
+    <!-- Редактор текстов -->
     <div class="bento-section">
-        <h3 style="font-size: 18px; margin-bottom: 15px;">Редактирование текстов сайта</h3>
-        <form th:action="@{/admin/text/update}" method="post">
-            <div style="margin-bottom: 15px;">
+        <div class="timer-title">Редактирование текстов сайта</div>
+        <form th:action="@{/admin/text/update}" method="post" style="margin-top: 10px;">
+            <div>
                 <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 5px;">Текст
                     дресс-кода:</label>
                 <textarea name="dresscode" th:text="${dresscodeText}"></textarea>
             </div>
-            <div style="margin-bottom: 15px;">
+            <div>
                 <label style="font-size: 12px; font-weight: 600; display: block; margin-bottom: 5px;">Список
                     пожеланий:</label>
                 <textarea name="wishes" th:text="${wishesText}"></textarea>
             </div>
-            <button type="submit"
-                    style="padding: 10px 20px; font-size: 12px; width: fit-content; background: var(--primary-pink)">
-                Сохранить тексты
-            </button>
+            <button type="submit" style="width: fit-content; padding: 12px 25px;">Сохранить тексты</button>
         </form>
     </div>
 
-    <!-- 4. Сводная таблица контроля -->
-    <div class="bento-section" style="background: #fff;">
-        <h3 style="font-size: 18px; margin-bottom: 10px;">Список приглашенных и статусы анкет</h3>
+    <!-- Сводная таблица контроля -->
+    <div class="bento-section" style="background-color: var(--color-white); padding: 10px 0;">
+        <div class="timer-title" style="padding: 0 14px;">Сводный список гостей</div>
         <table>
             <thead>
             <tr>
-                <th>Имя приглашенного</th>
+                <th>Имя</th>
                 <th>Персональная ссылка</th>
                 <th>Статус</th>
                 <th>Алкоголь</th>
@@ -87,15 +76,13 @@
             <tr th:each="guest : ${guests}">
                 <td th:text="${guest.name}" style="font-weight: 500;">Имя</td>
                 <td>
-                    <!-- Автогенерация ссылки на основе относительного пути токена -->
                     <input type="text" class="link-input" readonly
                            th:value="${'http://localhost:8080/invite/' + guest.token}"
                            onclick="this.select(); document.execCommand('copy'); alert('Ссылка скопирована!');">
                 </td>
                 <td>
-                    <span th:if="${guest.completedRsvp}" class="badge badge-success">Заполнено</span>
-                    <span th:unless="${guest.completedRsvp}" class="badge-danger"
-                          style="padding: 4px 8px; border-radius: 6px; font-size: 12px;">Ожидание</span>
+                    <span th:if="${guest.completedRsvp}" class="badge">Заполнено</span>
+                    <span th:unless="${guest.completedRsvp}" class="badge-danger">Ожидание</span>
                 </td>
                 <td th:text="${guest.completedRsvp ? guest.alcoholPreference : '—'}">—</td>
                 <td>
@@ -103,12 +90,8 @@
                     <span th:if="${guest.completedRsvp and !guest.shuttleRequired}">Нет</span>
                     <span th:unless="${guest.completedRsvp}">—</span>
                 </td>
-                <td th:text="${guest.completedRsvp ? guest.commentary : '—'}"
-                    style="max-width: 150px; font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                    —
-                </td>
+                <td th:text="${guest.completedRsvp ? guest.commentary : '—'}">—</td>
                 <td>
-                    <!-- Форма удаления -->
                     <form th:action="@{/admin/guest/delete/{id}(id=${guest.id})}" method="post" style="display:inline;">
                         <button type="submit" class="btn-del">Удалить</button>
                     </form>
@@ -118,7 +101,7 @@
         </table>
     </div>
 
-    <a href="/logout" class="logout-btn" style="margin-top: 20px;">Выйти из админки</a>
+    <a href="/logout" class="logout-btn">Выйти из админки</a>
 </div>
 
 </body>

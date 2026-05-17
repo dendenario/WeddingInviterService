@@ -7,22 +7,28 @@
 
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
-          rel="stylesheet">
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
     <link th:href="@{/css/wedding.css}" rel="stylesheet">
 </head>
 <body>
 
 <div class="invitation-card">
-    <h1 th:text="${names}">Денис & Мария</h1>
+    <!-- Персональное приветствие в виде явного акцентного блока -->
+    <div class="personal-greeting">
+        Рады приветствовать вас,<br>
+        <span th:text="${guestName}" style="font-weight: 700;">Имя Гостя</span>!
+    </div>
+
+
+
+    <h1>Денис & Мария</h1>
     <div class="subtitle">Приглашение на свадьбу</div>
 
-    <!-- Скрытый блок даты для JS -->
     <div id="weddingIsoTimestamp" th:data-iso="${targetIsoDateTime}" style="display: none;"></div>
 
-    <!-- Новое: Главное фото молодоженов -->
-    <div class="photo-block animate-fade">
+    <!-- Главное фото -->
+    <div class="photo-block">
         <img th:src="@{/images/couple.jpg}" alt="Денис и Мария" class="wedding-img">
     </div>
 
@@ -45,16 +51,15 @@
         </div>
     </div>
 
-    <!-- Детали проведения -->
+    <!-- Детали проведения (Блок стал пастельным плиточным) -->
     <div class="details-section">
-        <p style="text-align: center; margin-bottom: 15px; font-style: italic;">Разделите с нами этот счастливый
-            день!</p>
-        <p>📅 Дата: <strong th:text="${weddingDate}">25 Сентября 2026</strong></p>
-        <p>🏰 Место: <strong th:text="${weddingVenue}">Ресторан "Кедр"</strong></p>
-        <p>📍 Адрес: <span th:text="${weddingAddress}">Сосновая ул., Зайцево, Московская обл., 143390</span></p>
+        <div class="timer-title">Программа дня</div>
+        <p>📅 Дата торжества: <strong th:text="${weddingDate}">25 Сентября 2026</strong></p>
+        <p>🏰 Локация: <strong th:text="${weddingVenue}">Ресторан "Кедр"</strong></p>
+        <p>📍 Точный адрес: <span th:text="${weddingAddress}">Сосновая ул., Зайцево, Московская обл.</span></p>
 
-        <!-- Интерактивная карта -->
         <div class="map-container">
+            <!-- Прямое обращение по вашей ссылке с зумом z=19 -->
             <iframe th:src="@{https://yandex.ru/map-widget/v1/(mode='search',z=19,text=${weddingVenue + ' ' + weddingAddress})}"
                     width="100%"
                     height="280"
@@ -64,36 +69,28 @@
         </div>
     </div>
 
-    <!-- Новое: Блок дресс-кода -->
+    <!-- Блок дресс-кода (Блок стал пастельным плиточным) -->
     <div class="dresscode-section">
         <h3>Дресс-код торжества</h3>
-        <p style="font-size: 0.9rem; margin-bottom: 15px; font-style: italic;">Будем признательны, если при выборе
-            нарядов вы поддержите палитру нашей свадьбы:</p>
         <div class="photo-block">
             <img th:src="@{/images/dresscode.jpg}" alt="Палитра дресс-кода" class="wedding-img">
         </div>
+        <div class="dresscode-text-block" th:utext="${dresscodeText}">
+            <!-- Текст из БД -->
+        </div>
     </div>
 
-    <!-- Текстовое описание дресс-кода -->
-    <div class="dresscode-text-block" th:utext="${dresscodeText}">
-        <!-- Текст подгрузится динамически -->
-    </div>
-
-    <!-- Блок пожеланий по подаркам -->
+    <!-- Блок пожеланий по подаркам (Блок стал пастельным плиточным) -->
     <div class="wishes-section">
         <h3>Пожелания по подаркам</h3>
-        <p>Ваше внимание — самый главный подарок! Но если вы хотите сделать нам приятное:</p>
         <ul class="wishes-list" th:utext="${wishesText}">
-            <!-- Элементы <li> подгрузятся динамически -->
+            <!-- Список из БД -->
         </ul>
     </div>
 
-    <!-- Храним токен гостя для передачи в JS -->
-    <div id="guestTokenHolder" th:data-token="${guestToken}" style="display: none;"></div>
-
+    <!-- Форма ответов -->
     <div id="formContainer" th:if="${!completedRsvp}">
-        <!-- Персональное приветствие -->
-        <h3><span th:text="${guestName}">Дорогой гость</span>, подтвердите свое участие:</h3>
+        <h3>Анкета гостя</h3>
         <form id="rsvpForm">
             <label class="checkbox-container">
                 <input type="checkbox" id="attending" checked>
@@ -109,7 +106,7 @@
                 </select>
             </div>
 
-            <label class="checkbox-container" style="margin-top: 5px;">
+            <label class="checkbox-container">
                 <input type="checkbox" id="shuttle">
                 <span>Мне нужен трансфер от метро "Рассказовка"</span>
             </label>

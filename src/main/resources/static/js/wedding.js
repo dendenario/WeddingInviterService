@@ -24,18 +24,7 @@ function updateTimer() {
 updateTimer();
 const timerInterval = setInterval(updateTimer, 60000);
 
-// Инициализация карты строго после окончания CSS-анимации всплытия карточки
-document.addEventListener("DOMContentLoaded", function() {
-    const mapFrame = document.getElementById('weddingMap');
-    if (mapFrame) {
-        const realMapUrl = mapFrame.getAttribute('data-src');
-        setTimeout(() => {
-            mapFrame.setAttribute('src', realMapUrl);
-        }, 1300); // 1.3 секунды задержки спасают маркер Яндекса от зависания
-    }
-});
-
-// Отправка новой формы ответов через REST API
+// Отправка формы ответов через REST API с гарантированной защитой от мигания
 document.getElementById('rsvpForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
@@ -57,17 +46,31 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         body: JSON.stringify(data)
     })
     .then(response => {
-        if(response.ok) {
+        if (response.ok) {
             const formContainer = document.getElementById('formContainer');
-            formContainer.style.transition = 'opacity 0.5s ease';
+            const successMessage = document.getElementById('successMessage');
+
+            // 1. Плавно тушим форму
+            formContainer.style.transition = 'opacity 0.4s ease';
             formContainer.style.opacity = '0';
 
             setTimeout(() => {
+                // 2. Полностью убираем форму из документа
                 formContainer.style.display = 'none';
-                document.getElementById('successMessage').style.display = 'block';
-            }, 500);
+
+                // 3. Подготавливаем плашку успеха (она скрыта через opacity)
+                successMessage.style.display = 'block';
+                successMessage.style.opacity = '0';
+                successMessage.style.transition = 'opacity 0.5s ease';
+
+                // 4. На следующем кадре плавно её проявляем
+                setTimeout(() => {
+                    successMessage.style.opacity = '1';
+                }, 50);
+
+            }, 400);
         } else {
-            alert('Произошла ошибка при отправке. Попробуйте еще раз.');
+            alert('Произошла ошибка при сохранении ответа. Попробуйте еще раз.');
             submitButton.disabled = false;
             submitButton.innerText = 'Отправить ответ';
         }
