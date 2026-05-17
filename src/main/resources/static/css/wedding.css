@@ -305,3 +305,46 @@ body:has(.login-card) {
     margin-top: 30px;
     text-align: center;
 }
+/* Добавьте этот класс к вашим контентным блокам и карточкам */
+.project-card-premium {
+  box-shadow:
+    0 2px 4px rgba(0, 0, 0, 0.02),
+    0 10px 20px rgba(0, 0, 0, 0.04),
+    0 20px 40px rgba(0, 0, 0, 0.06);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.project-card-premium:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.04),
+    0 20px 45px rgba(0, 0, 0, 0.08),
+    0 40px 80px rgba(0, 0, 0, 0.12);
+}
+.main-button {
+  position: relative;
+  overflow: hidden;
+  transition: background-color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Эффект легкого упругого нажатия */
+.main-button:active {
+  transform: scale(0.96);
+}
+
+/* Плавное смещение внутренней иконки или текста при наведении */
+.main-button:hover .button-icon {
+  transform: translateX(4px);
+  transition: transform 0.3s ease;
+}
+.reveal-block {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-block.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}

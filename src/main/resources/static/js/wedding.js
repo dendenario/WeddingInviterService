@@ -82,3 +82,19 @@ document.getElementById('rsvpForm').addEventListener('submit', function(e) {
         submitButton.innerText = 'Отправить ответ';
     });
 });
+document.addEventListener('DOMContentLoaded', () => {
+  const blocks = document.querySelectorAll('.reveal-block');
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target); // Анимация срабатывает один раз
+      }
+    });
+  }, {
+    threshold: 0.15 // Блок начинает проявляться, когда виден на 15%
+  });
+
+  blocks.forEach(block => observer.observe(block));
+});
