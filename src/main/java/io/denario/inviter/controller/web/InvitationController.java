@@ -2,7 +2,6 @@ package io.denario.inviter.controller.web;
 
 
 import io.denario.inviter.controller.rest.model.GuestDto;
-import io.denario.inviter.controller.web.model.WeddingDetailsDto;
 import io.denario.inviter.data.repository.TextBlockEntity;
 import io.denario.inviter.data.repository.TextBlockRepository;
 import io.denario.inviter.service.GuestService;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -21,7 +21,7 @@ public class InvitationController {
     private final WeddingService weddingService;
     private final GuestService guestService; // Заменено с репозитория на сервис
     private final TextBlockRepository textBlockRepository;
-    private final DateTimeFormatter russianFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("ru"));
+    private final DateTimeFormatter russianFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.of("ru"));
 
     public InvitationController(WeddingService weddingService, GuestService guestService, TextBlockRepository textBlockRepository) {
         this.weddingService = weddingService;
@@ -40,15 +40,15 @@ public class InvitationController {
         model.addAttribute("guestToken", guest.getToken());
         model.addAttribute("completedRsvp", guest.getCompletedRsvp());
 
-        WeddingDetailsDto details = weddingService.getWeddingDetails();
-        if (details != null) {
-            model.addAttribute("names", details.getGroomName() + " & " + details.getBrideName());
-            LocalDateTime dateTime = LocalDateTime.parse(details.getWeddingDateTime());
-            model.addAttribute("weddingDate", dateTime.format(russianFormatter));
-            model.addAttribute("weddingVenue", details.getVenueName());
-            model.addAttribute("weddingAddress", details.getAddress());
-            model.addAttribute("targetIsoDateTime", details.getWeddingDateTime());
-        }
+        weddingService.getWeddingDetails()
+                .ifPresent(details -> {
+                    model.addAttribute("names", details.getGroomName() + " & " + details.getBrideName());
+                    LocalDateTime dateTime = LocalDateTime.parse(details.getWeddingDateTime());
+                    model.addAttribute("weddingDate", dateTime.format(russianFormatter));
+                    model.addAttribute("weddingVenue", details.getVenueName());
+                    model.addAttribute("weddingAddress", details.getAddress());
+                    model.addAttribute("targetIsoDateTime", details.getWeddingDateTime());
+                });
 
         model.addAttribute("dresscodeText", textBlockRepository.findById("DRESSCODE").map(TextBlockEntity::getContent).orElse(""));
         model.addAttribute("wishesText", textBlockRepository.findById("WISHES").map(TextBlockEntity::getContent).orElse(""));
@@ -57,8 +57,7 @@ public class InvitationController {
     }
 
     @GetMapping("/login")
-    public String loginPage() { return "login"; }
+    public String loginPage() {
+        return "login";
+    }
 }
-
-//            <iframe th:src="@{https://yandex.ru/map-widget/v1/(mode='search',z=19,text=${weddingVenue + ' ' + weddingAddress})}"
-

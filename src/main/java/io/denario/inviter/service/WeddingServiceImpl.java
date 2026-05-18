@@ -7,6 +7,8 @@ import io.denario.inviter.data.repository.WeddingDetailsRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 public class WeddingServiceImpl implements WeddingService {
 
@@ -20,21 +22,16 @@ public class WeddingServiceImpl implements WeddingService {
 
     @Override
     @Transactional(readOnly = true)
-    public WeddingDetailsDto getWeddingDetails() {
-        WeddingDetailsEntity entity = repository.getDetails();
-        return mapper.toDto(entity);
+    public Optional<WeddingDetailsDto> getWeddingDetails() {
+        return repository.getDetails().map(mapper::toDto);
     }
 
     @Override
     @Transactional
     public void updateWeddingDetails(WeddingDetailsDto dto) {
-        WeddingDetailsEntity current = repository.getDetails();
-
         WeddingDetailsEntity updatedEntity = mapper.toEntity(dto);
-        if (current != null) {
-            // Гарантируем, что мы обновляем существующую запись конфигурации, а не создаем новую
-            updatedEntity.setId(current.getId());
-        }
+        repository.getDetails()
+                .ifPresent(current -> updatedEntity.setId(current.getId()));
         repository.save(updatedEntity);
     }
 }

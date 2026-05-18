@@ -31,7 +31,7 @@ public class GuestServiceImpl implements GuestService {
 
     @Override
     @Transactional
-    public void deleteGuest(Long id) {
+    public void deleteGuest(UUID id) {
         guestRepository.deleteById(id);
     }
 

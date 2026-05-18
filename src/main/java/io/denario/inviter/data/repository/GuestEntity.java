@@ -2,7 +2,12 @@ package io.denario.inviter.data.repository;
 
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.util.UUID;
 
 @Entity
 @Table(name = "guests")
@@ -13,8 +18,8 @@ import lombok.*;
 public class GuestEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(nullable = false)
     private String name; // Вы заносите имя сами: "Дядя Саша", "Маша и Артем"

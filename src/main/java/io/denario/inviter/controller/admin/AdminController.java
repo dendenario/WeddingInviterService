@@ -8,6 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+import java.util.UUID;
+
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -23,11 +26,11 @@ public class AdminController {
     @GetMapping
     public String showAdminPage(Model model) {
         model.addAttribute("guests", guestService.getAllGuests());
-        model.addAttribute("totalAttending", guestService.getAllGuests().stream().filter(g -> Boolean.TRUE.equals(g.getAttending())).count());
+        model.addAttribute("totalAttending", Objects.requireNonNull(guestService.getAllGuests()).stream().filter(g -> Boolean.TRUE.equals(g.getAttending())).count());
         model.addAttribute("totalShuttle", guestService.getAllGuests().stream().filter(g -> Boolean.TRUE.equals(g.getAttending()) && Boolean.TRUE.equals(g.getShuttleRequired())).count());
 
-        model.addAttribute("dresscodeText", textBlockRepository.findById("DRESSCODE").map(t -> t.getContent()).orElse(""));
-        model.addAttribute("wishesText", textBlockRepository.findById("WISHES").map(t -> t.getContent()).orElse(""));
+        model.addAttribute("dresscodeText", textBlockRepository.findById("DRESSCODE").map(TextBlockEntity::getContent).orElse(""));
+        model.addAttribute("wishesText", textBlockRepository.findById("WISHES").map(TextBlockEntity::getContent).orElse(""));
 
         return "admin";
     }
@@ -43,7 +46,7 @@ public class AdminController {
 
     // Удаление гостя из списка
     @PostMapping("/guest/delete/{id}")
-    public String deleteGuest(@PathVariable Long id) {
+    public String deleteGuest(@PathVariable UUID id) {
         guestService.deleteGuest(id);
         return "redirect:/admin";
     }
