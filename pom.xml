@@ -51,7 +51,17 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.53.1.0</version>
-            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>tech.ydb.dialects</groupId>
+            <artifactId>hibernate-ydb-dialect</artifactId>
+            <version>1.5.2</version>
+        </dependency>
+        <dependency>
+            <groupId>tech.ydb.jdbc</groupId>
+            <artifactId>ydb-jdbc-driver</artifactId>
+            <version>2.3.25</version>
         </dependency>
 
         <!-- Диалект Hibernate для поддержки SQLite -->
