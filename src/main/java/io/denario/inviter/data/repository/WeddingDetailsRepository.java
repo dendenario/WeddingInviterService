@@ -3,12 +3,15 @@ package io.denario.inviter.data.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+import java.util.UUID;
+
 @Repository
-public interface WeddingDetailsRepository extends JpaRepository<WeddingDetailsEntity, Long> {
+public interface WeddingDetailsRepository extends JpaRepository<WeddingDetailsEntity, UUID> {
     // Получаем первую (и единственную) запись настроек
-    default WeddingDetailsEntity getDetails() {
-        return findFirstByOrderByIdAsc().orElse(null);
+    default Optional<WeddingDetailsEntity> getDetails() {
+        return findFirstByOrderByIdAsc();
     }
 
-    java.util.Optional<WeddingDetailsEntity> findFirstByOrderByIdAsc();
+    Optional<WeddingDetailsEntity> findFirstByOrderByIdAsc();
 }

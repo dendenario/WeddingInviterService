@@ -4,6 +4,7 @@ package io.denario.inviter.service;
 import io.denario.inviter.controller.web.model.WeddingDetailsDto;
 import io.denario.inviter.data.repository.WeddingDetailsEntity;
 import org.springframework.stereotype.Component;
+
 import java.time.LocalDateTime;
 
 @Component

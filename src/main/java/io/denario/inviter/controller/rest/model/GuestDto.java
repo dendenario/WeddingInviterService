@@ -1,15 +1,19 @@
 package io.denario.inviter.controller.rest.model;
 
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import lombok.*;
+import java.util.UUID;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class GuestDto {
-    private Long id;
+    private UUID id;
     private String name;
     private String token;
     private Boolean completedRsvp;
