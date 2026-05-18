@@ -51,8 +51,7 @@ jobs:
           revision-cores: 1
           revision-core-fraction: 5
           revision-memory: "2GB"
-          service-account-id: ${{ secrets.YC_CONTAINER_SA_ID }}
-          # Передаем переменные окружения (включая новое имя для базы данных)
+          revision-service-account-id: ${{ secrets.YC_CONTAINER_SA_ID }}
           environment: |
             PORT=8080
             SPRING_PROFILES_ACTIVE=prod
