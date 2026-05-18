@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: wedding-invitation
+
+  # Настройки подключения к Yandex Database (YDB)
+  datasource:
+    # URL вашей БД (замените на свой из консоли Yandex Cloud)
+    # Переменная SA_KEY_FILE_PATH указывает на путь к JSON-ключу сервисного аккаунта внутри контейнера
+    url: jdbc:ydb:grpcs://${YDB_ENDPOINT}/?database=${YDB_DATABASE_PATH}&saKeyFile=file:${SA_KEY_FILE_PATH}
+    driver-class-name: tech.ydb.jdbc.YdbDriver
+
+  # Настройки JPA и Hibernate под YDB
+  jpa:
+    hibernate:
+      # Для YDB безопасно оставить update, но Hibernate создаст таблицы только при первом запуске
+      ddl-auto: update
+    properties:
+      hibernate:
+        # Указываем специальный диалект для работы с синтаксисом YDB
+        dialect: tech.ydb.dialect.YdbDialect
+        show_sql: false     # Отключаем в проде, чтобы не засорять логи Яндекса
+        format_sql: false
+
+  # Настройки шаблонизатора Thymeleaf
+  thymeleaf:
+    cache: true # Обязательно TRUE для Serverless! Сэкономит оперативную память и ускорит «холодный старт»
+    mode: HTML
+    encoding: UTF-8
+
+# Настройки логирования
+logging:
+  level:
+    root: info
+    org.hibernate.SQL: error # Отключаем логирование SQL в продакшене

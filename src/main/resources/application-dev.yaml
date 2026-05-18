@@ -1,0 +1,38 @@
+app:
+  security:
+    admin:
+      login: admin
+      password: 1
+spring:
+  # Настройки подключения к базе данных SQLite
+  datasource:
+    url: jdbc:sqlite:wedding.db
+    driver-class-name: org.sqlite.JDBC # Исправлено здесь
+    username:
+    password:
+    # Включение поддержки внешних ключей при каждом подключении к SQLite
+    connection-init-sql: PRAGMA foreign_keys = ON;
+
+  # Настройки JPA и Hibernate
+  jpa:
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      # Автоматически обновляет структуру таблиц в SQLite при изменении Java-сущностей
+      ddl-auto: update
+    properties:
+      hibernate:
+        # Раскомментируйте строчку ниже, если хотите видеть SQL-запросы в консоли при разработке
+        show_sql: true
+        format_sql: true
+
+  # Настройки шаблонизатора Thymeleaf
+  thymeleaf:
+    cache: false # Отключаем кэш для удобной верстки (изменения в HTML видны без перезапуска сервера)
+    mode: HTML
+    encoding: UTF-8
+
+# Настройки логирования (опционально)
+logging:
+  level:
+    org.hibernate.SQL: info
+# Чтобы не потерять <iframe th:src="@{https://yandex.ru/map-widget/v1/(mode='search',z=19,text=${weddingVenue + ' ' + weddingAddress})}"
