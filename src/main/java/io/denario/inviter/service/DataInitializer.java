@@ -1,6 +1,7 @@
 package io.denario.inviter.service;
 
 
+import io.denario.inviter.confuguration.AdminCredentialsProperties;
 import io.denario.inviter.data.repository.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -17,13 +18,16 @@ public class DataInitializer implements CommandLineRunner {
     private final UserRepository userRepository;
     private final TextBlockRepository textBlockRepository;
     private final PasswordEncoder passwordEncoder;
+    private final AdminCredentialsProperties aCreds;
 
 
     @Override
     public void run(String... args) {
-        if (userRepository.count() == 0) {
-            userRepository.save(UserEntity.builder().username("guest").password(passwordEncoder.encode("2")).role("ROLE_USER").build());
-            userRepository.save(UserEntity.builder().username("admin").password(passwordEncoder.encode("1")).role("ROLE_ADMIN").build());
+        if (userRepository.findByUsername(aCreds.getLogin()).isEmpty()) {
+            userRepository.save(UserEntity.builder()
+                    .username(aCreds.getLogin())
+                    .password(passwordEncoder.encode(aCreds.getPassword()))
+                    .role("ROLE_ADMIN").build());
         }
 
         if (detailsRepository.count() == 0) {
