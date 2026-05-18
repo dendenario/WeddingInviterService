@@ -42,7 +42,7 @@ jobs:
 
       # 6. Создаем (если нет) или обновляем Serverless Container в Yandex Cloud
       - name: Deploy Serverless Container
-        uses: yc-actions/yc-sls-container-deploy@v2
+        uses: yc-actions/yc-sls-container-deploy@v4
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_KEY }}
           container-name: "spring-thymeleaf-app"
