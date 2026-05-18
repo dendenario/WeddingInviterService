@@ -21,7 +21,6 @@
     </div>
 
 
-
     <h1>Денис & Мария</h1>
     <div class="subtitle">Приглашение на свадьбу</div>
 
@@ -90,8 +89,9 @@
 
     <!-- Форма ответов -->
     <div id="formContainer" th:if="${!completedRsvp}">
+        <!-- Добавьте эту строку внутрь формы -->
         <h3>Анкета гостя</h3>
-        <form id="rsvpForm">
+        <form id="rsvpForm" th:data-token="${guestToken}">
             <label class="checkbox-container">
                 <input type="checkbox" id="attending" checked>
                 <span>Я смогу присутствовать</span>
@@ -126,6 +126,7 @@
         </p>
     </div>
 </div>
+
 
 <script th:src="@{/js/wedding.js}" defer></script>
 
