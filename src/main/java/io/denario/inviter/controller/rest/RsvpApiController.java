@@ -2,7 +2,6 @@ package io.denario.inviter.controller.rest;
 
 
 import io.denario.inviter.controller.rest.model.GuestDto;
-import io.denario.inviter.data.repository.GuestEntity;
 import io.denario.inviter.service.GuestService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

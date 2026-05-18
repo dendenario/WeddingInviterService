@@ -21,7 +21,7 @@ public class InvitationController {
     private final WeddingService weddingService;
     private final GuestService guestService; // Заменено с репозитория на сервис
     private final TextBlockRepository textBlockRepository;
-    private final DateTimeFormatter russianFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("ru"));
+    private final DateTimeFormatter russianFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.of("ru"));
 
     public InvitationController(WeddingService weddingService, GuestService guestService, TextBlockRepository textBlockRepository) {
         this.weddingService = weddingService;
