@@ -22,9 +22,9 @@ jobs:
           distribution: 'temurin'
           cache: 'maven' # Кэширует зависимости, чтобы сборка шла быстрее
 
-      # 3. Собираем JAR-файл проекта через Maven (пропуская тесты для скорости)
+      # 3. Собираем JAR-файл проекта через встроенный Maven
       - name: Build with Maven
-        run: ./mvnw clean package -DskipTests
+        run: mvn clean package -DskipTests
 
       # 4. Авторизуемся в Yandex Cloud Container Registry
       - name: Yandex Cloud Registry Login
