@@ -3,7 +3,7 @@ name: Deploy Spring Boot to Yandex Serverless
 on:
   push:
     branches:
-      - main # Скрипт сработает автоматически при пуше в ветку main
+      - master # Скрипт сработает автоматически при пуше в ветку main
 
 jobs:
   build-and-deploy:
