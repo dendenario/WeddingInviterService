@@ -40,21 +40,21 @@ jobs:
           docker push $IMAGE_NAME
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
-      # 6. Создаем (если нет) или обновляем Serverless Container в Yandex Cloud
+      # 6. Создаем или обновляем Serverless Container в Yandex Cloud
       - name: Deploy Serverless Container
         uses: yc-actions/yc-sls-container-deploy@v4
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_KEY }}
-          container-name: "spring-thymeleaf-app"
+          container-name: "wedding-inviter-service-app"
           folder-id: ${{ secrets.YC_FOLDER_ID }}
-          image: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/spring-app:${{ github.sha }}
-          cores: 1
-          core-fraction: 5
-          memory: "2GB"
-          # Передаем переменные окружения внутрь контейнера Яндекса
+          revision-image-url: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/spring-app:${{ github.sha }}
+          revision-cores: 1
+          revision-core-fraction: 5
+          revision-memory: "2GB"
+          # Передаем переменные окружения (включая новое имя для базы данных)
           environment: |
             PORT=8080
-            SPRING_PROFILES_ACTIVE=prod 
+            SPRING_PROFILES_ACTIVE=prod
             APP_SECURITY_USERNAME=${{ secrets.APP_SECURITY_USERNAME }}
             APP_SECURITY_PASSWORD=${{ secrets.APP_SECURITY_PASSWORD }}
             YDB_SERVICE_ACCOUNT_KEY_FILE_CREDENTIALS=${{ secrets.YC_YDB_SA_KEY }}
