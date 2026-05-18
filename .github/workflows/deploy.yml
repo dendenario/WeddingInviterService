@@ -46,6 +46,7 @@ jobs:
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_KEY }}
           container-name: "spring-thymeleaf-app"
+          folder-id: ${{ secrets.YC_FOLDER_ID }}
           image: cr.yandex/${{ secrets.YC_REGISTRY_ID }}/spring-app:${{ github.sha }}
           cores: 1
           core-fraction: 5
