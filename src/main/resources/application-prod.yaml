@@ -6,7 +6,7 @@ spring:
   datasource:
     # URL вашей БД (замените на свой из консоли Yandex Cloud)
     # Переменная SA_KEY_FILE_PATH указывает на путь к JSON-ключу сервисного аккаунта внутри контейнера
-    url: ${YDB_URL}?useMetadata=true
+    url: ${YDB_URL}?auth-mode=ENV
     driver-class-name: tech.ydb.jdbc.YdbDriver
 
   # Настройки JPA и Hibernate под YDB
