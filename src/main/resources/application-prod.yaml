@@ -6,7 +6,7 @@ spring:
   datasource:
     # URL вашей БД (замените на свой из консоли Yandex Cloud)
     # Переменная SA_KEY_FILE_PATH указывает на путь к JSON-ключу сервисного аккаунта внутри контейнера
-    url: ${YDB_URL}
+    url: ${YDB_URL}?useMetadata=true
     driver-class-name: tech.ydb.jdbc.YdbDriver
 
   # Настройки JPA и Hibernate под YDB
@@ -15,8 +15,6 @@ spring:
       hibernate:
         dialect: tech.ydb.dialect.YdbDialect
       ydb:
-        # Указываем точный формат параметра для беспарольной авторизации через IAM-токен контейнера
-        useMetadata: true
     hibernate:
       ddl-auto: update
 
