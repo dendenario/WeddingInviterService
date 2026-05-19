@@ -13,7 +13,7 @@ spring:
   jpa:
     properties:
       hibernate:
-        dialect: tech.ydb.hibernate.dialect.YdbDialect
+        dialect: tech.ydb.dialects.hibernate.YdbDialect
     hibernate:
       ddl-auto: update
 
