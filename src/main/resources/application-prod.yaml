@@ -21,7 +21,7 @@ spring:
         show_sql: false     # Отключаем в проде, чтобы не засорять логи Яндекса
         format_sql: false
       ydb:
-        saKeyFile: ${YDB_KEY} # Драйвер сам прочитает и раскодирует Base64 строку
+        saFile: ${YDB_SA_KEY_PATH} # Драйвер сам прочитает и раскодирует Base64 строку
   # Настройки шаблонизатора Thymeleaf
   thymeleaf:
     cache: true # Обязательно TRUE для Serverless! Сэкономит оперативную память и ускорит «холодный старт»
