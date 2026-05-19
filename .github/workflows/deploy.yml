@@ -40,24 +40,30 @@ jobs:
           docker push $IMAGE_NAME
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
-      # 6. Гарантированно получаем URL контейнера (создаем пустую сущность, если её нет)
+      # 6. Устанавливаем Yandex Cloud CLI на раннер GitHub Actions
+      - name: Install Yandex Cloud CLI
+        uses: yandex-cloud/userspace-actions/yc-setup@v1
+        with:
+          # Плагину нужна только авторизация, передаем ваш ключ
+          yc-sa-json-credentials: ${{ secrets.YC_SA_KEY }}
+
+      # 7. Теперь утилита 'yc' доступна! Гарантированно получаем URL контейнера
       - name: Ensure Container and Get URL
         id: get_url
         run: |
-          yc config profile create sa-profile || true
-          yc config set service-account-key <(echo '${{ secrets.YC_SA_KEY }}')
+          # Конфигурируем каталог (аккаунт уже авторизован предыдущим шагом)
           yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
           
-          # Если контейнера нет, команда создаст его. Если есть — просто пропустит без ошибки.
+          # Если контейнера нет, создаем пустую сущность. Если есть — просто пропускаем.
           yc serverless container create --name="wedding-inviter-service-app" || true
           
-          # Теперь контейнер существует на 100%. Забираем его ID.
+          # Забираем ID существующего или только что созданного контейнера
           CONTAINER_ID=$(yc serverless container get --name="wedding-inviter-service-app" --format=json | jq -r '.id')
           
           # Формируем и сохраняем финальный URL
           echo "url=https://" >> $GITHUB_OUTPUT
 
-      # 7. Деплоим контейнер ОДИН раз, уже зная точный URL
+      # 8. Деплоим контейнер ОДИН раз, уже зная точный URL
       - name: Deploy Serverless Container
         uses: yc-actions/yc-sls-container-deploy@v4
         with:
@@ -70,9 +76,10 @@ jobs:
           revision-memory: "2GB"
           revision-service-account-id: ${{ secrets.YC_CONTAINER_SA_ID }}
           revision-env: |
+            PORT=8080
             SPRING_PROFILES_ACTIVE=prod
-            APP_SECURITY_USERNAME=${{ secrets.APP_SECURITY_USERNAME }}
-            APP_SECURITY_PASSWORD=${{ secrets.APP_SECURITY_PASSWORD }}
             APP_BASE_URL=${{ steps.get_url.outputs.url }}
-            YDB_URL=${{ secrets.YC_YDB_URL }}
-            USE_METADATA_CREDENTIALS=1
+            APP_SECURITY_USERNAME='${{ secrets.APP_SECURITY_USERNAME }}'
+            APP_SECURITY_PASSWORD='${{ secrets.APP_SECURITY_PASSWORD }}'
+            YDB_URL='${{ secrets.YC_YDB_URL }}'
+            YDB_KEY='${{ secrets.YC_YDB_SA_BASE64_KEY }}'
