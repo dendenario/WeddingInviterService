@@ -14,7 +14,8 @@ spring:
     properties:
       hibernate:
         dialect: tech.ydb.hibernate.dialect.YdbDialect
-        hibernate.query.limit_by_navigator_method: true
+        query:
+          limit_by_navigator_method: true
     hibernate:
       ddl-auto: update
 
