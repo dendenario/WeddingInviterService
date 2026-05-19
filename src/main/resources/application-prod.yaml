@@ -15,8 +15,6 @@ spring:
       hibernate:
         dialect: tech.ydb.dialect.YdbDialect
       ydb:
-        # Драйвер YDB сам распакует Base64-строку из переменной окружения
-        saKeyContent: ${YDB_KEY}
     hibernate:
       ddl-auto: update
 

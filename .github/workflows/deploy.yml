@@ -58,4 +58,3 @@ jobs:
             APP_SECURITY_USERNAME=${{ secrets.APP_SECURITY_USERNAME }}
             APP_SECURITY_PASSWORD=${{ secrets.APP_SECURITY_PASSWORD }}
             YDB_URL=${{ secrets.YC_YDB_URL }}
-            YDB_KEY=${{ secrets.YC_YDB_SA_BASE64_KEY }}
