@@ -3,7 +3,6 @@ app:
     admin:
       login: admin
       password: 1
-  base-url: 'http://localhost:8080'
 spring:
   # Настройки подключения к базе данных SQLite
   datasource:
