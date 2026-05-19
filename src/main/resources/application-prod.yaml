@@ -11,17 +11,15 @@ spring:
 
   # Настройки JPA и Hibernate под YDB
   jpa:
-    hibernate:
-      # Для YDB безопасно оставить update, но Hibernate создаст таблицы только при первом запуске
-      ddl-auto: update
     properties:
       hibernate:
-        # Указываем специальный диалект для работы с синтаксисом YDB
         dialect: tech.ydb.dialect.YdbDialect
-        show_sql: false     # Отключаем в проде, чтобы не засорять логи Яндекса
-        format_sql: false
       ydb:
-        saFile: ${YDB_SA_KEY_PATH} # Драйвер сам прочитает и раскодирует Base64 строку
+        # Драйвер YDB сам распакует Base64-строку из переменной окружения
+        saKeyContent: ${YDB_KEY}
+    hibernate:
+      ddl-auto: update
+
   # Настройки шаблонизатора Thymeleaf
   thymeleaf:
     cache: true # Обязательно TRUE для Serverless! Сэкономит оперативную память и ускорит «холодный старт»

@@ -41,7 +41,6 @@ jobs:
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
       # 6. Создаем или обновляем Serverless Container в Yandex Cloud
-            # 6. Создаем или обновляем Serverless Container в Yandex Cloud
       - name: Deploy Serverless Container
         uses: yc-actions/yc-sls-container-deploy@v4
         with:
@@ -53,14 +52,10 @@ jobs:
           revision-core-fraction: 5
           revision-memory: "2GB"
           revision-service-account-id: ${{ secrets.YC_CONTAINER_SA_ID }}
-          # 1. Оставляем в env только короткие переменные
           revision-env: |
-            PORT=8080
-            SPRING_PROFILES_ACTIVE=prod
-            APP_SECURITY_USERNAME='${{ secrets.APP_SECURITY_USERNAME }}'
-            APP_SECURITY_PASSWORD='${{ secrets.APP_SECURITY_PASSWORD }}'
-            YDB_URL='${{ secrets.YC_YDB_URL }}'
-          # 2. ДОБАВИЛИ БЛОК СЕКРЕТОВ: передаем оригинальный JSON-ключ базы данных
-          # Синтаксис плагина: id_секрета_в_github -> путь_к_файлу_внутри_контейнера
-          revision-secrets: |
-            id=${{ secrets.YC_YDB_SA_KEY }},environment-variable=YDB_SA_KEY_PATH
+            - 'PORT=8080'
+            - 'SPRING_PROFILES_ACTIVE=prod'
+            - 'APP_SECURITY_USERNAME=${{ secrets.APP_SECURITY_USERNAME }}'
+            - 'APP_SECURITY_PASSWORD=${{ secrets.APP_SECURITY_PASSWORD }}'
+            - 'YDB_URL=${{ secrets.YC_YDB_URL }}'
+            - 'YDB_KEY=${{ secrets.YC_YDB_SA_BASE64_KEY }}'
