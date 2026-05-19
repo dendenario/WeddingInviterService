@@ -6,3 +6,5 @@ app:
 spring:
   application:
     name: wedding-invitation
+server:
+  port=${PORT:8080}
