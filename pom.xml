@@ -55,8 +55,8 @@
 
         <dependency>
             <groupId>tech.ydb.dialects</groupId>
-            <artifactId>hibernate-ydb-dialect</artifactId>
-            <version>1.5.2</version>
+            <artifactId>hibernate-ydb-dialect-v7</artifactId>
+            <version>0.9.1</version>
         </dependency>
         <dependency>
             <groupId>tech.ydb.jdbc</groupId>
