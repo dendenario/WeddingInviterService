@@ -32,22 +32,15 @@ jobs:
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_KEY }}
 
-      # 5. Собираем Docker-образ и передаем секреты через аргументы сборки
+      # 5. Собираем чистый Docker-образ без секретов внутри
       - name: Build and Push Docker Image
         run: |
           IMAGE_NAME=cr.yandex/${{ secrets.YC_REGISTRY_ID }}/spring-app:${{ github.sha }}
-          docker build \
-          --build-arg PORT=8080 \
-          --build-arg SPRING_PROFILES_ACTIVE=prod \
-          --build-arg APP_SECURITY_USERNAME="${{ secrets.APP_SECURITY_USERNAME }}" \
-          --build-arg APP_SECURITY_PASSWORD="${{ secrets.APP_SECURITY_PASSWORD }}" \
-          --build-arg YDB_URL="${{ secrets.YC_YDB_URL }}" \
-          --build-arg YDB_KEY="${{ secrets.YC_YDB_SA_BASE64_KEY }}" \
-          -t $IMAGE_NAME .
+          docker build -t $IMAGE_NAME .
           docker push $IMAGE_NAME
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
-      # 6. Обновляем Serverless Container в Yandex Cloud (используем v4)
+      # 6. Создаем или обновляем Serverless Container в Yandex Cloud
       - name: Deploy Serverless Container
         uses: yc-actions/yc-sls-container-deploy@v4
         with:
@@ -59,3 +52,11 @@ jobs:
           revision-core-fraction: 5
           revision-memory: "2GB"
           revision-service-account-id: ${{ secrets.YC_CONTAINER_SA_ID }}
+          # ПРАВИЛЬНЫЙ СИНТАКСИС ДЛЯ ПЛАГИНА v4: YAML-список
+          revision-env: |
+            PORT=8080
+            SPRING_PROFILES_ACTIVE=prod
+            APP_SECURITY_USERNAME='${{ secrets.APP_SECURITY_USERNAME }}'
+            APP_SECURITY_PASSWORD='${{ secrets.APP_SECURITY_PASSWORD }}'
+            YDB_URL='${{ secrets.YC_YDB_URL }}'
+            YDB_KEY='${{ secrets.YC_YDB_SA_BASE64_KEY }}'
