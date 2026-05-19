@@ -3,7 +3,7 @@ name: Deploy Spring Boot to Yandex Serverless
 on:
   push:
     branches:
-      - master # Скрипт сработает автоматически при пуше в ветку main
+      - master # Срабатывает при пуше или слиянии в master
 
 jobs:
   build-and-deploy:
@@ -14,25 +14,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Устанавливаем Java
-      - name: Set up JDK 21
+      # 2. Устанавливаем Java (замените '17' на вашу версию, если нужно)
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
-          cache: 'maven' # Кэширует зависимости, чтобы сборка шла быстрее
+          cache: 'maven'
 
       # 3. Собираем JAR-файл проекта через встроенный Maven
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      # 4. Авторизуемся в Yandex Cloud Container Registry
+      # 4. Авторизуемся в Yandex Cloud Container Registry через СТАРЫЙ текстовый JSON
       - name: Yandex Cloud Registry Login
         uses: yc-actions/yc-cr-login@v2
         with:
           yc-sa-json-credentials: ${{ secrets.YC_SA_KEY }}
 
-      # 5. Собираем Docker-образ из вашего Dockerfile и пушим его в созданный Registry
+      # 5. Собираем Docker-образ и пушим его в созданный Registry
       - name: Build and Push Docker Image
         run: |
           IMAGE_NAME=cr.yandex/${{ secrets.YC_REGISTRY_ID }}/spring-app:${{ github.sha }}
@@ -40,7 +40,7 @@ jobs:
           docker push $IMAGE_NAME
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
-      # 6. Создаем или обновляем Serverless Container в Yandex Cloud
+      # 6. Обновляем Serverless Container в Yandex Cloud (используем v4)
       - name: Deploy Serverless Container
         uses: yc-actions/yc-sls-container-deploy@v4
         with:
@@ -52,13 +52,11 @@ jobs:
           revision-core-fraction: 5
           revision-memory: "2GB"
           revision-service-account-id: ${{ secrets.YC_CONTAINER_SA_ID }}
-          # ИСПРАВИЛИ: Передаем переменные в формате JSON-массива строк
           revision-env: |
-            [
-              "PORT=8080",
-              "SPRING_PROFILES_ACTIVE=prod",
-              "APP_SECURITY_USERNAME=${{ secrets.APP_SECURITY_USERNAME }}",
-              "APP_SECURITY_PASSWORD=${{ secrets.APP_SECURITY_PASSWORD }}",
-              "YDB_URL=${{ secrets.YC_YDB_URL }}",
-              "YDB_SERVICE_ACCOUNT_KEY_FILE_CREDENTIALS=${{ secrets.YC_YDB_SA_KEY }}"
-            ]
+            PORT=8080
+            SPRING_PROFILES_ACTIVE=prod
+            APP_SECURITY_USERNAME=${{ secrets.APP_SECURITY_USERNAME }}
+            APP_SECURITY_PASSWORD=${{ secrets.APP_SECURITY_PASSWORD }}
+            YDB_URL=${{ secrets.YC_YDB_URL }}
+            YDB_BASE64_KEY=${{ secrets.YC_YDB_SA_BASE64_KEY }}
+            YDB_SERVICE_ACCOUNT_KEY_FILE_CREDENTIALS=${{ secrets.YC_YDB_SA_KEY }}
