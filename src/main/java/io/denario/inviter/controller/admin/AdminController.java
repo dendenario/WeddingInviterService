@@ -4,6 +4,7 @@ package io.denario.inviter.controller.admin;
 import io.denario.inviter.data.repository.TextBlockEntity;
 import io.denario.inviter.data.repository.TextBlockRepository;
 import io.denario.inviter.service.GuestService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,9 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
+
+    @Value("${app.base-url}")
+    private String appUrl;
 
     private final GuestService guestService;
     private final TextBlockRepository textBlockRepository;
@@ -31,6 +35,8 @@ public class AdminController {
 
         model.addAttribute("dresscodeText", textBlockRepository.findById("DRESSCODE").map(TextBlockEntity::getContent).orElse(""));
         model.addAttribute("wishesText", textBlockRepository.findById("WISHES").map(TextBlockEntity::getContent).orElse(""));
+
+        model.addAttribute("inviteUrl", appUrl + "/invite/");
 
         return "admin";
     }

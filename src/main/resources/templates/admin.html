@@ -77,7 +77,7 @@
                 <td th:text="${guest.name}" style="font-weight: 500;">Имя</td>
                 <td>
                     <input type="text" class="link-input" readonly
-                           th:value="${'http://localhost:8080/invite/' + guest.token}"
+                           th:value="${inviteUrl}+${guest.token}"
                            onclick="this.select(); document.execCommand('copy'); alert('Ссылка скопирована!');">
                 </td>
                 <td>
