@@ -8,13 +8,14 @@ spring:
     # Переменная SA_KEY_FILE_PATH указывает на путь к JSON-ключу сервисного аккаунта внутри контейнера
     url: ${YDB_URL}?auth-mode=ENV
     driver-class-name: tech.ydb.jdbc.YdbDriver
+    connection-properties:
+      auth-mode: ENV
 
   # Настройки JPA и Hibernate под YDB
   jpa:
     properties:
       hibernate:
         dialect: tech.ydb.dialect.YdbDialect
-      ydb:
     hibernate:
       ddl-auto: update
 
