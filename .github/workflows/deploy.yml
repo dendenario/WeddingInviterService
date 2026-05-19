@@ -52,10 +52,11 @@ jobs:
           revision-core-fraction: 5
           revision-memory: "2GB"
           revision-service-account-id: ${{ secrets.YC_CONTAINER_SA_ID }}
+          # Модифицированный блок переменных
           revision-env: |
             PORT=8080
             SPRING_PROFILES_ACTIVE=prod
             APP_SECURITY_USERNAME=${{ secrets.APP_SECURITY_USERNAME }}
             APP_SECURITY_PASSWORD=${{ secrets.APP_SECURITY_PASSWORD }}
-            YDB_SERVICE_ACCOUNT_KEY_FILE_CREDENTIALS=${{ secrets.YC_YDB_SA_KEY }}
             YDB_URL=${{ secrets.YC_YDB_URL }}
+            YDB_SERVICE_ACCOUNT_KEY_FILE_CREDENTIALS=${{ secrets.YC_YDB_SA_KEY }}
