@@ -16,7 +16,7 @@ spring:
         dialect: tech.ydb.dialect.YdbDialect
       ydb:
         # Указываем точный формат параметра для беспарольной авторизации через IAM-токен контейнера
-        auth-mode: ENV
+        useMetadata: true
     hibernate:
       ddl-auto: update
 

@@ -57,3 +57,4 @@ jobs:
             APP_SECURITY_USERNAME=${{ secrets.APP_SECURITY_USERNAME }}
             APP_SECURITY_PASSWORD=${{ secrets.APP_SECURITY_PASSWORD }}
             YDB_URL=${{ secrets.YC_YDB_URL }}
+            USE_METADATA_CREDENTIALS=1
