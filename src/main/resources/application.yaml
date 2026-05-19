@@ -3,6 +3,7 @@ app:
     admin:
       login: ${APP_SECURITY_USERNAME}
       password: ${APP_SECURITY_PASSWORD}
+  base-url: ${APP_BASE_URL}
 spring:
   application:
     name: wedding-invitation

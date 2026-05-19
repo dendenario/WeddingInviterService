@@ -40,7 +40,24 @@ jobs:
           docker push $IMAGE_NAME
           echo "IMAGE_NAME=$IMAGE_NAME" >> $GITHUB_ENV
 
-      # 6. Создаем или обновляем Serverless Container в Yandex Cloud
+      # 6. Гарантированно получаем URL контейнера (создаем пустую сущность, если её нет)
+      - name: Ensure Container and Get URL
+        id: get_url
+        run: |
+          yc config profile create sa-profile || true
+          yc config set service-account-key <(echo '${{ secrets.YC_SA_KEY }}')
+          yc config set folder-id ${{ secrets.YC_FOLDER_ID }}
+          
+          # Если контейнера нет, команда создаст его. Если есть — просто пропустит без ошибки.
+          yc serverless container create --name="wedding-inviter-service-app" || true
+          
+          # Теперь контейнер существует на 100%. Забираем его ID.
+          CONTAINER_ID=$(yc serverless container get --name="wedding-inviter-service-app" --format=json | jq -r '.id')
+          
+          # Формируем и сохраняем финальный URL
+          echo "url=https://" >> $GITHUB_OUTPUT
+
+      # 7. Деплоим контейнер ОДИН раз, уже зная точный URL
       - name: Deploy Serverless Container
         uses: yc-actions/yc-sls-container-deploy@v4
         with:
@@ -56,5 +73,6 @@ jobs:
             SPRING_PROFILES_ACTIVE=prod
             APP_SECURITY_USERNAME=${{ secrets.APP_SECURITY_USERNAME }}
             APP_SECURITY_PASSWORD=${{ secrets.APP_SECURITY_PASSWORD }}
+            APP_BASE_URL=${{ steps.get_url.outputs.url }}
             YDB_URL=${{ secrets.YC_YDB_URL }}
             USE_METADATA_CREDENTIALS=1
