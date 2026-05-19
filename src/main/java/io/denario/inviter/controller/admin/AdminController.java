@@ -4,6 +4,7 @@ package io.denario.inviter.controller.admin;
 import io.denario.inviter.data.repository.TextBlockEntity;
 import io.denario.inviter.data.repository.TextBlockRepository;
 import io.denario.inviter.service.GuestService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,9 @@ public class AdminController {
     private final GuestService guestService;
     private final TextBlockRepository textBlockRepository;
 
+    @Value("${spring.profiles.active:dev}")
+    private String activeProfile;
+
     public AdminController(GuestService guestService, TextBlockRepository textBlockRepository) {
         this.guestService = guestService;
         this.textBlockRepository = textBlockRepository;
@@ -33,7 +37,10 @@ public class AdminController {
         model.addAttribute("dresscodeText", textBlockRepository.findById("DRESSCODE").map(TextBlockEntity::getContent).orElse(""));
         model.addAttribute("wishesText", textBlockRepository.findById("WISHES").map(TextBlockEntity::getContent).orElse(""));
 
-        String appUrl = ServletUriComponentsBuilder.fromCurrentContextPath().toUriString();
+        String scheme = "prod".equals(activeProfile) ? "https" : "http";
+        String appUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .scheme(scheme)
+                .toUriString();
         model.addAttribute("inviteUrl", appUrl + "/invite/");
 
         return "admin";
