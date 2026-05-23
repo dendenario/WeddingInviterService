@@ -17,7 +17,7 @@
     <!-- Персональное приветствие в виде явного акцентного блока -->
     <div class="personal-greeting">
         Рады приветствовать вас,<br>
-        <span th:text="${guestName}" style="font-weight: 700;">Имя Гостя</span>!
+        <span th:text="${guestName}">Имя Гостя</span>!
     </div>
 
 
@@ -79,13 +79,14 @@
         </div>
     </div>
 
-    <!-- Блок пожеланий по подаркам (Блок стал пастельным плиточным) -->
-    <div class="wishes-section">
+    <!-- Для пожеланий (выводим чистый текст, обернутый в класс списков): -->
+    <div class="wishes-section reveal-block">
         <h3>Пожелания по подаркам</h3>
         <ul class="wishes-list" th:utext="${wishesText}">
-            <!-- Список из БД -->
+            <!-- Сюда из БД должны приходить только теги <li>Текст</li> -->
         </ul>
     </div>
+
 
     <!-- Форма ответов -->
     <div id="formContainer" th:if="${!completedRsvp}">

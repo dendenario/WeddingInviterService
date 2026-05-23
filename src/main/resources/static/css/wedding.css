@@ -56,7 +56,7 @@ body {
    ========================================================================== */
 
 h1 {
-    font-size: 36px;
+    font-size: 56px;
     font-weight: 600;
     color: var(--color-brown-text);
     letter-spacing: -0.02em;
@@ -286,7 +286,7 @@ body:has(.login-card) {
     border-radius: var(--radius-element);
     border: 1px solid rgba(92, 74, 67, 0.12);
     font-size: 26px;                                /* Возвращено к гармоничным 26px */
-    font-weight: 600;
+    font-weight: 400;
     line-height: 1.35;
     color: var(--color-brown-text);
     text-align: center;
@@ -347,4 +347,118 @@ body:has(.login-card) {
 .reveal-block.is-visible {
   opacity: 1;
   transform: translateY(0);
+}
+
+/* ==========================================================================
+   АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА И ФИКС ШРИФТОВ
+   ========================================================================== */
+
+/* 1. Настройка нового шрифта для h1 и h2 */
+@font-face {
+    font-family: 'BoroughGroteskPro';
+    /* Абсолютный путь от корня папки static */
+    src: url('/fonts/BoroughGroteskPro-Shaded.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+
+h1, h2 {
+    font-family: 'BoroughGroteskPro', cursive, sans-serif;
+    font-weight: normal;
+    color: var(--color-brown-text);
+    line-height: 1.2;
+}
+
+/* 2. Медиа-запрос для смартфонов (экраны меньше 480px) */
+@media (max-width: 480px) {
+    /* Уменьшаем огромные отступы вокруг сайта, чтобы дать контенту простор */
+    body {
+        padding: 20px 10px;
+    }
+
+    /* Главная карточка: уменьшаем внутренний паддинг с 50px до 20px */
+    .invitation-card, .login-card, .admin-container {
+        padding: 24px 16px;
+        border-width: 3px; /* Чуть тоньше рамку для изящности */
+    }
+
+    /* Исправление ломающихся и огромных заголовков */
+    h1 {
+        font-size: 34px; /* Уменьшаем, чтобы имена «Денис & Мария» не разрывались на 3 строки */
+        margin-bottom: 8px;
+    }
+
+    h2 {
+        font-size: 26px;
+        margin-bottom: 12px;
+    }
+
+    h3 {
+        font-size: 16px;
+        margin-bottom: 15px;
+    }
+
+    /* Блок персонального приветствия: уменьшаем текст и отступы */
+    .personal-greeting {
+        font-size: 18px;
+        padding: 16px 20px;
+        margin-bottom: 25px;
+    }
+
+    /* Бэнто-блоки (таймер, программа, дресс-код) */
+    .timer-container, .bento-section, .details-section, .dresscode-section, .wishes-section {
+        padding: 16px; /* Вместо 26px, освобождаем место для текста */
+        margin-bottom: 20px;
+    }
+
+    /* ФИКС ДЛЯ СПИСКОВ И ПЕРЕЧИСЛЕНИЙ (Wishes & Details) */
+    .wishes-list li {
+        padding-left: 20px;
+        font-size: 14px;
+        line-height: 1.4;
+        word-break: break-word; /* Защита от вылезания длинных слов */
+    }
+
+    .wishes-list li::before {
+        left: 0; /* Прижимаем звездочку ближе к тексту */
+    }
+
+    .details-section p, .dresscode-text-block p {
+        font-size: 14px; /* Слегка уменьшаем текст, чтобы строки не были обрубками */
+        line-height: 1.4;
+    }
+
+    /* Адаптация таймера: уменьшаем расстояния */
+    .timer-countdown {
+        gap: 12px; /* Меньше расстояние между днями/часами/минутами */
+    }
+
+    .timer-number {
+        font-size: 24px; /*Montserrat теперь аккуратно встанет в ряд */
+    }
+
+    .timer-label {
+        font-size: 10px;
+    }
+
+    /* Кнопки и инпуты: делаем компактнее */
+    input[type="text"], input[type="password"], .login-input, select, textarea, button {
+        padding: 12px 14px;
+        font-size: 14px;
+    }
+
+    /* Оптимизация анимации для мобильных (без тяжелого scale) */
+    @keyframes appleFadeUp {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Принудительно показываем reveal-блоки, если мобильный браузер блокирует JS */
+    .reveal-block {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
+    }
 }
