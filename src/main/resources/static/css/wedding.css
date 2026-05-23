@@ -157,13 +157,14 @@ p, td {
 .wishes-list { list-style: none; }
 .wishes-list li {
     position: relative;
-    padding-left: 24px;
-    margin-bottom: 12px;
+    padding-left: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-break: break-word; /* Защита от вылезания длинных слов */
 }
 .wishes-list li:last-child { margin-bottom: 0; }
 
 .wishes-list li::before {
-    content: "✦";
     position: absolute;
     left: 2px;
     color: var(--color-pink-main);
@@ -402,7 +403,7 @@ h1, h2 {
 
     /* Блок персонального приветствия: уменьшаем текст и отступы */
     .personal-greeting {
-        font-size: 18px;
+        font-size: 22px;
         padding: 16px 20px;
         margin-bottom: 25px;
     }
@@ -411,18 +412,6 @@ h1, h2 {
     .timer-container, .bento-section, .details-section, .dresscode-section, .wishes-section {
         padding: 16px; /* Вместо 26px, освобождаем место для текста */
         margin-bottom: 20px;
-    }
-
-    /* ФИКС ДЛЯ СПИСКОВ И ПЕРЕЧИСЛЕНИЙ (Wishes & Details) */
-    .wishes-list li {
-        padding-left: 20px;
-        font-size: 14px;
-        line-height: 1.4;
-        word-break: break-word; /* Защита от вылезания длинных слов */
-    }
-
-    .wishes-list li::before {
-        left: 0; /* Прижимаем звездочку ближе к тексту */
     }
 
     .details-section p, .dresscode-text-block p {
