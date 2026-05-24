@@ -29,5 +29,5 @@ public class WeddingDetailsDto {
     private String venueName;
 
     @NotBlank(message = "Адрес проведения обязателен")
-    private String address; // Новое поле
+    private String address;
 }

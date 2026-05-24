@@ -22,6 +22,7 @@ public class InvitationController {
     private final GuestService guestService; // Заменено с репозитория на сервис
     private final TextBlockRepository textBlockRepository;
     private final DateTimeFormatter russianFormatter = DateTimeFormatter.ofPattern("d MMMM yyyy", Locale.of("ru"));
+    private final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm", Locale.of("ru"));
 
     public InvitationController(WeddingService weddingService, GuestService guestService, TextBlockRepository textBlockRepository) {
         this.weddingService = weddingService;
@@ -47,6 +48,7 @@ public class InvitationController {
                     model.addAttribute("weddingDate", dateTime.format(russianFormatter));
                     model.addAttribute("weddingVenue", details.getVenueName());
                     model.addAttribute("weddingAddress", details.getAddress());
+                    model.addAttribute("weddingTime", dateTime.format(timeFormatter));
                     model.addAttribute("targetIsoDateTime", details.getWeddingDateTime());
                 });
 

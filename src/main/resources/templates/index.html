@@ -62,6 +62,14 @@
             Дата торжества: <strong th:text="${weddingDate}">25 Сентября 2026</strong>
         </p>
         <p>
+            <svg class="details-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                 stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+            Время начала: <strong th:text="${weddingTime}">15:00</strong>
+        </p>
+        <p>
             <svg class="details-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path d="M12 6L5 12v10h14V12L12 6z"/>
                 </path></svg>
@@ -117,6 +125,7 @@
                     <option value="Не определено">Предпочтения по напиткам</option>
                     <option value="Крепкие напитки">Предпочитаю крепкие напитки</option>
                     <option value="Не крепкие напитки">Предпочитаю легкие/не крепкие напитки</option>
+                <option value="Не крепкие напитки">Предпочитаю и легкие, и крепкие напитки</option>
                     <option value="Не пью алкоголь">Я не пью алкоголь</option>
                 </select>
             </div>
