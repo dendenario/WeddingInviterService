@@ -5,28 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход на сайт — Денис и Мария</title>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://googleapis.com" rel="stylesheet">
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
 
     <!-- Подключение единой пастельной дизайн-системы -->
     <link th:href="@{/css/wedding.css}" rel="stylesheet">
 </head>
 <body>
 
-<!-- Добавлен класс reveal-block и удалены лишние инлайн-стили -->
+<!-- Добавлен класс reveal-block для плавного появления -->
 <div class="login-card reveal-block">
 
-    <!-- Заголовок автоматически получит шрифт Zschusch Light Schatten C из CSS -->
     <h1>Добро пожаловать</h1>
-
-    <!-- Текст переведен на Montserrat для поддержки единого Bento-стиля -->
     <p style="margin-bottom: 25px; opacity: 0.8;">на свадебный сайт Дениса и Марии</p>
 
     <!-- Вывод ошибки, если введен неверный пароль/логин -->
     <div th:if="${param.error}" class="error-msg"
          style="color: #c65911; background-color: #fce4d6; padding: 10px; border-radius: 8px; font-size: 0.85rem; margin-bottom: 15px;">
-        Неверный логин или пароль. Пожалуйста, проверьте пригласительный билет.
+        Неверный логин или пароль.
     </div>
 
     <!-- Форма отправляет данные на встроенный обработчик Spring Security -->

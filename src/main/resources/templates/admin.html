@@ -6,7 +6,7 @@
     <title>Панель организатора — Денис и Мария</title>
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com" rel="stylesheet">
 
     <!-- Подключение единой пастельной дизайн-системы -->
     <link th:href="@{/css/wedding.css}" rel="stylesheet">
@@ -15,7 +15,7 @@
 
 <div class="admin-container">
     <h1>Панель управления свадьбой</h1>
-    <div class="subtitle" style="text-align: center;">Денис & Мария</div>
+    <div class="subtitle">Денис & Мария</div>
 
     <!-- Модульная статистика Бэнто -->
     <div class="timer-container" style="display: flex; gap: 30px; text-align: center; margin-bottom: 40px;">
@@ -57,48 +57,51 @@
         </form>
     </div>
 
-    <!-- Сводная таблица контроля -->
+    <!-- Сводная таблица контроля (Обернута в адаптивный контейнер) -->
     <div class="bento-section" style="background-color: var(--color-white); padding: 10px 0;">
         <div class="timer-title" style="padding: 0 14px;">Сводный список гостей</div>
-        <table>
-            <thead>
-            <tr>
-                <th>Имя</th>
-                <th>Персональная ссылка</th>
-                <th>Статус</th>
-                <th>Алкоголь</th>
-                <th>Трансфер</th>
-                <th>Комментарий</th>
-                <th>Действие</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="guest : ${guests}">
-                <td th:text="${guest.name}" style="font-weight: 500;">Имя</td>
-                <td>
-                    <input type="text" class="link-input" readonly
-                           th:value="${inviteUrl}+${guest.token}"
-                           onclick="this.select(); document.execCommand('copy'); alert('Ссылка скопирована!');">
-                </td>
-                <td>
-                    <span th:if="${guest.completedRsvp}" class="badge">Заполнено</span>
-                    <span th:unless="${guest.completedRsvp}" class="badge-danger">Ожидание</span>
-                </td>
-                <td th:text="${guest.completedRsvp ? guest.alcoholPreference : '—'}">—</td>
-                <td>
-                    <span th:if="${guest.completedRsvp and guest.shuttleRequired}">Да</span>
-                    <span th:if="${guest.completedRsvp and !guest.shuttleRequired}">Нет</span>
-                    <span th:unless="${guest.completedRsvp}">—</span>
-                </td>
-                <td th:text="${guest.completedRsvp ? guest.commentary : '—'}">—</td>
-                <td>
-                    <form th:action="@{/admin/guest/delete/{id}(id=${guest.id})}" method="post" style="display:inline;">
-                        <button type="submit" class="btn-del">Удалить</button>
-                    </form>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                <tr>
+                    <th>Имя</th>
+                    <th>Персональная ссылка</th>
+                    <th>Статус</th>
+                    <th>Алкоголь</th>
+                    <th>Трансфер</th>
+                    <th>Комментарий</th>
+                    <th>Действие</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="guest : ${guests}">
+                    <td th:text="${guest.name}" style="font-weight: 500;">Имя</td>
+                    <td>
+                        <input type="text" class="link-input" readonly
+                               th:value="${inviteUrl}+${guest.token}"
+                               onclick="this.select(); document.execCommand('copy'); alert('Ссылка скопирована!');">
+                    </td>
+                    <td>
+                        <span th:if="${guest.completedRsvp}" class="badge">Заполнено</span>
+                        <span th:unless="${guest.completedRsvp}" class="badge-danger">Ожидание</span>
+                    </td>
+                    <td th:text="${guest.completedRsvp ? guest.alcoholPreference : '—'}">—</td>
+                    <td>
+                        <span th:if="${guest.completedRsvp and guest.shuttleRequired}">Да</span>
+                        <span th:if="${guest.completedRsvp and !guest.shuttleRequired}">Нет</span>
+                        <span th:unless="${guest.completedRsvp}">—</span>
+                    </td>
+                    <td th:text="${guest.completedRsvp ? guest.commentary : '—'}">—</td>
+                    <td>
+                        <form th:action="@{/admin/guest/delete/{id}(id=${guest.id})}" method="post"
+                              style="display:inline;">
+                            <button type="submit" class="btn-del">Удалить</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <a href="/logout" class="logout-btn">Выйти из админки</a>

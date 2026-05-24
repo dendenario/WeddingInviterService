@@ -2,452 +2,567 @@
    FINE DESIGN SYSTEM — DENIS & MARIA WEDDING (BENTO PASTELESTHETIC)
    ========================================================================== */
 :root {
-    --color-bg: #fbf5f5;           /* Пастельный светло-розовый фон страниц */
-    --color-pink-main: #fbcbc9;    /* Пастельный розовый (основной) */
-    --color-green-accent: #d1e2d3; /* Пастельный зеленый (акцентный) */
-    --color-white: #ffffff;        /* Чистый белый */
-    --color-brown-text: #5c4a43;   /* Коричневый для текста */
-    --color-block-bg: #f7f0ef;     /* Пастельный фон для бэнто-блоков (как у таймера) */
+   --color-bg: #fbf5f5;
+   /* Пастельный светло-розовый фон страниц */
+   --color-pink-main: #fbcbc9;
+   /* Пастельный розовый (основной) */
+   --color-green-accent: #d1e2d3;
+   /* Пастельный зеленый (акцентный) */
+   --color-white: #ffffff;
+   /* Чистый белый */
+   --color-brown-text: #5c4a43;
+   /* Коричневый для текста */
+   --color-block-bg: #f7f0ef;
+   /* Пастельный фон для бэнто-блоков */
 
-    --radius-container: 28px;
-    --radius-element: 14px;
-    --transition-apple: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+   --radius-container: 28px;
+   --radius-element: 14px;
+   --transition-apple: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', -apple-system, sans-serif;
-    -webkit-font-smoothing: antialiased;
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   font-family: 'Montserrat', -apple-system, sans-serif;
+   -webkit-font-smoothing: antialiased;
 }
 
 body {
-    background-color: var(--color-bg);
-    color: var(--color-brown-text);
-    line-height: 1.5;
-    letter-spacing: -0.01em;
-    padding: 60px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+   background-color: var(--color-bg);
+   color: var(--color-brown-text);
+   line-height: 1.5;
+   letter-spacing: -0.01em;
+   padding: 60px 20px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 100vh;
 }
 
 /* ==========================================================================
-   КАРТОЧКИ (ФОРМА ЛОГИНА ТЕПЕРЬ КОНТРАСТНАЯ НА БЕЛОМ ФОНЕ)
+   КОНТЕЙНЕРЫ И КАРТОЧКИ
    ========================================================================== */
-.invitation-card, .login-card, .admin-container {
-    background-color: var(--color-white); /* Белый фон карточки гарантирует, что она не сольется */
-    padding: 50px;
-    border-radius: var(--radius-container);
-    border: 4px solid var(--color-pink-main);
-    box-shadow: 0 30px 60px rgba(92, 74, 67, 0.05);
-    width: 100%;
-    animation: appleFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
+.invitation-card,
+.login-card,
+.admin-container {
+   background-color: var(--color-white);
+   padding: 50px;
+   border-radius: var(--radius-container);
+   border: 4px solid var(--color-pink-main);
+   box-shadow: 0 30px 60px rgba(92, 74, 67, 0.05);
+   width: 100%;
+   animation: appleFadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+   opacity: 0;
 }
 
-.invitation-card, .login-card { max-width: 580px; text-align: center; }
-.admin-container { max-width: 1100px; }
+.invitation-card,
+.login-card {
+   max-width: 580px;
+   text-align: center;
+}
+
+/* Задача №4: Заголовки админки теперь всегда аккуратно центрированы */
+.admin-container {
+   max-width: 1100px;
+}
+
+.admin-container h1,
+.admin-container .subtitle {
+   text-align: center;
+}
 
 /* ==========================================================================
-   ТИПОГРАФИКА И ИМЕННОЕ ОБРАЩЕНИЕ ВВЕРХУ
+   ТИПОГРАФИКА И СТАНДАРТИЗАЦИЯ ШРИФТОВ (Задача №3)
    ========================================================================== */
+@font-face {
+   font-family: 'BoroughGroteskPro';
+   src: url('/fonts/BoroughGroteskPro-Shaded.otf') format('opentype');
+   font-weight: normal;
+   font-style: normal;
+   font-display: swap;
+}
+
+h1,
+h2 {
+   font-family: 'BoroughGroteskPro', cursive, sans-serif;
+   font-weight: normal;
+   color: var(--color-brown-text);
+   line-height: 1.2;
+   text-align: center;
+}
 
 h1 {
-    font-size: 56px;
-    font-weight: 600;
-    color: var(--color-brown-text);
-    letter-spacing: -0.02em;
-    margin-bottom: 4px;
+   font-size: 56px;
+   letter-spacing: -0.02em;
+   margin-bottom: 4px;
 }
 
+/* Элемент h3 стал главным унифицированным заголовком разделов */
 h3 {
-    font-size: 18px;
-    font-weight: 600;
-    color: var(--color-brown-text);
-    margin-bottom: 20px;
-    text-align: center;
+   font-family: 'Montserrat', sans-serif;
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--color-brown-text);
+   margin-bottom: 20px;
+   text-align: center;
 }
 
 .subtitle {
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--color-brown-text);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    opacity: 0.6;
-    margin-bottom: 35px;
+   font-size: 12px;
+   font-weight: 500;
+   color: var(--color-brown-text);
+   text-transform: uppercase;
+   letter-spacing: 0.15em;
+   opacity: 0.6;
+   margin-bottom: 35px;
 }
 
-p, td {
-    font-size: 15px;
-    font-weight: 400;
-    color: var(--color-brown-text);
+/* Глобальная фиксация размера шрифта для исключения прыжков текста */
+p,
+td,
+span,
+label,
+option {
+   font-size: 15px;
+   font-weight: 400;
+   color: var(--color-brown-text);
 }
 
 /* ==========================================================================
-   УНИФИЦИРОВАННЫЕ СМЫСЛОВЫЕ БЛОКИ ПОД ФОН ТАЙМЕРА (BENTO STYLE)
+   БЭНТО-БЛОКИ (BENTO STYLE)
    ========================================================================== */
-.timer-container, .bento-section, .details-section, .dresscode-section, .wishes-section {
-    background-color: var(--color-block-bg); /* Единый пастельный подфон для всех блоков */
-    padding: 26px;
-    border-radius: var(--radius-element);
-    border: 1px dashed var(--color-pink-main);
-    margin-bottom: 30px;
-    text-align: left;
+.timer-container,
+.bento-section,
+.details-section,
+.dresscode-section,
+.wishes-section {
+   background-color: var(--color-block-bg);
+   padding: 26px;
+   border-radius: var(--radius-element);
+   border: 1px dashed var(--color-pink-main);
+   margin-bottom: 30px;
+   text-align: left;
 }
 
-.timer-container { text-align: center; }
+.timer-container {
+   text-align: center;
+}
 
-.timer-title, .bento-title {
-    font-size: 11px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    opacity: 0.8;
-    margin-bottom: 14px;
+.timer-title,
+.bento-title {
+   font-size: 13px;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 0.1em;
+   opacity: 0.8;
+   margin-bottom: 14px;
+   text-align: center;
 }
 
 .timer-countdown {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
+   display: flex;
+   justify-content: center;
+   gap: 24px;
 }
 
-.timer-segment { display: flex; flex-direction: column; align-items: center; }
-.timer-number { font-size: 26px; font-weight: 600; }
-.timer-label { font-size: 11px; opacity: 0.7; }
+.timer-segment {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
 
-/* Фото внутри пастельных блоков */
+.timer-number {
+   font-size: 26px;
+   font-weight: 600;
+}
+
+.timer-label {
+   font-size: 11px;
+   opacity: 0.7;
+}
+
+/* Векторные иконки в программе дня (Задача №2) */
+.details-icon {
+   display: inline-block;
+   width: 18px;
+   height: 18px;
+   vertical-align: text-bottom;
+   margin-right: 8px;
+   color: var(--color-brown-text);
+   opacity: 0.8;
+}
+
+/* Изображения внутри блоков */
 .photo-block {
-    width: 100%;
-    border-radius: 10px;
-    overflow: hidden;
-    margin: 15px 0;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+   width: 100%;
+   border-radius: 10px;
+   overflow: hidden;
+   margin: 15px 0;
+   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.02);
 }
 
 .wedding-img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
-    transition: var(--transition-apple);
+   width: 100%;
+   height: auto;
+   display: block;
+   object-fit: cover;
+   transition: var(--transition-apple);
 }
 
-.photo-block:hover .wedding-img { transform: scale(1.02); }
+.photo-block:hover .wedding-img {
+   transform: scale(1.02);
+}
 
-.details-section p, .dresscode-text-block p, .wishes-section p { margin-bottom: 12px; }
-.details-section p:last-child, .dresscode-text-block p:last-child, .wishes-section p:last-child { margin-bottom: 0; }
+.details-section p,
+.dresscode-text-block p,
+.wishes-section p {
+   margin-bottom: 12px;
+}
+
+.details-section p:last-child,
+.dresscode-text-block p:last-child,
+.wishes-section p:last-child {
+   margin-bottom: 0;
+}
 
 .details-section strong {
-    font-weight: 600;
-    background: linear-gradient(180deg, transparent 65%, var(--color-green-accent) 35%);
+   font-weight: 600;
+   background: linear-gradient(180deg, transparent 65%, var(--color-green-accent) 35%);
 }
 
 .map-container {
-    margin-top: 18px;
-    border-radius: 10px;
-    overflow: hidden;
-    border: 1px solid var(--color-pink-main);
+   margin-top: 18px;
+   border-radius: 10px;
+   overflow: hidden;
+   border: 1px solid var(--color-pink-main);
 }
 
-.wishes-list { list-style: none; }
-.wishes-list li {
-    position: relative;
-    padding-left: 20px;
-    font-size: 14px;
-    line-height: 1.4;
-    word-break: break-word; /* Защита от вылезания длинных слов */
-}
-.wishes-list li:last-child { margin-bottom: 0; }
-
-.wishes-list li::before {
-    position: absolute;
-    left: 2px;
-    color: var(--color-pink-main);
+/* Исправление отступов и выравнивания в блоке пожеланий */
+.wishes-text-block {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--color-brown-text);
 }
 
 /* ==========================================================================
-   ФОРМЫ И ЕДИНЫЕ КОНТРОЛЛЫ
+   ФОРМЫ И КОНТРОЛЛЫ
    ========================================================================== */
-form { display: flex; flex-direction: column; gap: 16px; }
-
-input[type="text"], input[type="password"], .login-input, .link-input, select, textarea {
-    width: 100%;
-    padding: 14px 18px;
-    border: 1px solid var(--color-pink-main);
-    border-radius: var(--radius-element);
-    font-size: 15px;
-    background-color: var(--color-white);
-    color: var(--color-brown-text);
-    transition: var(--transition-apple);
-    outline: none;
+form {
+   display: flex;
+   flex-direction: column;
+   gap: 16px;
 }
 
-input:focus, select:focus, textarea:focus {
-    border-color: var(--color-green-accent);
-    box-shadow: 0 0 0 4px rgba(209, 226, 211, 0.5);
+input[type="text"],
+input[type="password"],
+.login-input,
+.link-input,
+select,
+textarea {
+   width: 100%;
+   padding: 14px 18px;
+   border: 1px solid var(--color-pink-main);
+   border-radius: var(--radius-element);
+   font-size: 15px;
+   background-color: var(--color-white);
+   color: var(--color-brown-text);
+   transition: var(--transition-apple);
+   outline: none;
 }
 
-button, .logout-btn {
-    display: inline-block;
-    text-align: center;
-    width: 100%;
-    padding: 15px;
-    font-size: 15px;
-    font-weight: 600;
-    background-color: var(--color-green-accent);
-    color: var(--color-brown-text);
-    border: none;
-    border-radius: var(--radius-element);
-    cursor: pointer;
-    transition: var(--transition-apple);
-    text-decoration: none;
-    box-shadow: 0 4px 12px rgba(209, 226, 211, 0.2);
+input:focus,
+select:focus,
+textarea:focus {
+   border-color: var(--color-green-accent);
+   box-shadow: 0 0 0 4px rgba(209, 226, 211, 0.5);
 }
 
-button:hover, .logout-btn:hover {
-    background-color: #bdcfbe;
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(209, 226, 211, 0.4);
+button,
+.logout-btn {
+   display: inline-block;
+   text-align: center;
+   width: 100%;
+   padding: 15px;
+   font-size: 15px;
+   font-weight: 600;
+   background-color: var(--color-green-accent);
+   color: var(--color-brown-text);
+   border: none;
+   border-radius: var(--radius-element);
+   cursor: pointer;
+   transition: var(--transition-apple);
+   text-decoration: none;
+   box-shadow: 0 4px 12px rgba(209, 226, 211, 0.2);
 }
 
-button:active, .logout-btn:active { transform: translateY(0); }
+button:hover,
+.logout-btn:hover {
+   background-color: #bdcfbe;
+   transform: translateY(-1px);
+   box-shadow: 0 6px 16px rgba(209, 226, 211, 0.4);
+}
 
 .checkbox-container {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    font-size: 14px;
+   display: flex;
+   align-items: center;
+   gap: 12px;
+   cursor: pointer;
+   font-size: 15px;
 }
 
 .checkbox-container input {
-    width: 18px;
-    height: 18px;
-    accent-color: var(--color-brown-text);
-}
-
-/* Админка таблицы */
-.bento-section { background-color: var(--color-block-bg); }
-table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-th, td { padding: 14px; text-align: left; border-bottom: 1px solid rgba(0,0,0,0.04); }
-th {
-    background-color: transparent;
-    font-weight: 600;
-    color: var(--color-brown-text);
-    font-size: 11px;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    border-bottom: 2px solid var(--color-pink-main);
-    padding-bottom: 10px;
-}
-
-.badge, .badge-danger { padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500; display: inline-block; }
-.badge { background-color: #e2f0d9; color: #385723; }
-.badge-danger { background-color: #fce4d6; color: #c65911; }
-
-.btn-del {
-    background-color: transparent;
-    color: #c65911;
-    border: 1px solid rgba(198, 89, 17, 0.3);
-    padding: 6px 12px;
-    font-size: 12px;
-    font-weight: 500;
-    border-radius: 6px;
-    width: auto;
-    margin-top: 0;
-}
-.btn-del:hover { background-color: #fce4d6; }
-
-.link-input { width: auto; padding: 6px 10px; font-size: 12px; border-radius: 6px; background-color: var(--color-white); }
-
-@keyframes appleFadeUp {
-    from { opacity: 0; transform: scale(0.97) translateY(15px); }
-    to { opacity: 1; transform: scale(1) translateY(0); }
-}
-
-/* Фикс для страницы логина: переопределяем фон всего экрана */
-body:has(.login-card) {
-    background-color: var(--color-white) !important;
-}
-/* Карточка логина внутри получает пастельную контрастную подложку */
-.login-card {
-    background-color: var(--color-block-bg) !important;
-    border: 1px solid var(--color-pink-main) !important;
-}
-
-/* Элегантный акцентный блок персонального приветствия (Вариант 26px) */
-.personal-greeting {
-    background-color: var(--color-green-accent);
-    padding: 24px 30px;
-    border-radius: var(--radius-element);
-    border: 1px solid rgba(92, 74, 67, 0.12);
-    font-size: 26px;                                /* Возвращено к гармоничным 26px */
-    font-weight: 400;
-    line-height: 1.35;
-    color: var(--color-brown-text);
-    text-align: center;
-    margin-bottom: 45px;
-    box-shadow: 0 6px 20px rgba(209, 226, 211, 0.35);
-    display: inline-block;
-    width: 100%;
-    letter-spacing: -0.02em;
-}
-/* Сообщение об успешной отправке (чистый скрытый блок) */
-.success-message {
-    display: none; /* Браузер жестко скрывает блок, никакой анимации на старте */
-    font-family: 'Montserrat', sans-serif;
-    font-size: 1.4rem;
-    color: var(--color-brown-text);
-    margin-top: 30px;
-    text-align: center;
-}
-/* Добавьте этот класс к вашим контентным блокам и карточкам */
-.project-card-premium {
-  box-shadow:
-    0 2px 4px rgba(0, 0, 0, 0.02),
-    0 10px 20px rgba(0, 0, 0, 0.04),
-    0 20px 40px rgba(0, 0, 0, 0.06);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
-}
-
-.project-card-premium:hover {
-  transform: translateY(-4px);
-  box-shadow:
-    0 4px 8px rgba(0, 0, 0, 0.04),
-    0 20px 45px rgba(0, 0, 0, 0.08),
-    0 40px 80px rgba(0, 0, 0, 0.12);
-}
-.main-button {
-  position: relative;
-  overflow: hidden;
-  transition: background-color 0.3s ease, transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-/* Эффект легкого упругого нажатия */
-.main-button:active {
-  transform: scale(0.96);
-}
-
-/* Плавное смещение внутренней иконки или текста при наведении */
-.main-button:hover .button-icon {
-  transform: translateX(4px);
-  transition: transform 0.3s ease;
-}
-.reveal-block {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-  will-change: opacity, transform;
-}
-
-.reveal-block.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+   width: 18px;
+   height: 18px;
+   accent-color: var(--color-brown-text);
 }
 
 /* ==========================================================================
-   АДАПТИВНОСТЬ ПОД МОБИЛЬНЫЕ УСТРОЙСТВА И ФИКС ШРИФТОВ
+   АДМИН-ПАНЕЛЬ И ТАБЛИЦЫ
    ========================================================================== */
-
-/* 1. Настройка нового шрифта для h1 и h2 */
-@font-face {
-    font-family: 'BoroughGroteskPro';
-    /* Абсолютный путь от корня папки static */
-    src: url('/fonts/BoroughGroteskPro-Shaded.otf') format('opentype');
-    font-weight: normal;
-    font-style: normal;
-    font-display: swap;
+/* Задача №5: Контейнер для реализации безопасного горизонтального скролла */
+.table-responsive {
+   width: 100%;
+   overflow-x: auto;
+   -webkit-overflow-scrolling: touch;
+   margin-top: 10px;
+   border-radius: 8px;
 }
 
-
-h1, h2 {
-    font-family: 'BoroughGroteskPro', cursive, sans-serif;
-    font-weight: normal;
-    color: var(--color-brown-text);
-    line-height: 1.2;
+table {
+   width: 100%;
+   border-collapse: collapse;
+   min-width: 800px;
+   /* Гарантирует читаемость колонок при прокрутке */
 }
 
-/* 2. Медиа-запрос для смартфонов (экраны меньше 480px) */
+th,
+td {
+   padding: 14px;
+   text-align: left;
+   border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+}
+
+th {
+   background-color: transparent;
+   font-weight: 600;
+   color: var(--color-brown-text);
+   font-size: 11px;
+   text-transform: uppercase;
+   letter-spacing: 0.08em;
+   border-bottom: 2px solid var(--color-pink-main);
+   padding-bottom: 10px;
+}
+
+.badge,
+.badge-danger {
+   padding: 5px 12px;
+   border-radius: 6px;
+   font-size: 12px;
+   font-weight: 500;
+   display: inline-block;
+}
+
+.badge {
+   background-color: #e2f0d9;
+   color: #385723;
+}
+
+.badge-danger {
+   background-color: #fce4d6;
+   color: #c65911;
+}
+
+.btn-del {
+   background-color: transparent;
+   color: #c65911;
+   border: 1px solid rgba(198, 89, 17, 0.3);
+   padding: 6px 12px;
+   font-size: 12px;
+   font-weight: 500;
+   border-radius: 6px;
+   width: auto;
+}
+
+.btn-del:hover {
+   background-color: #fce4d6;
+}
+
+.link-input {
+   width: auto;
+   padding: 6px 10px;
+   font-size: 12px;
+   border-radius: 6px;
+}
+
+/* Стилизация сообщения об ошибке авторизации (Задача №3) */
+.error-msg {
+   color: #c65911;
+   background-color: #fce4d6;
+   padding: 12px;
+   border-radius: var(--radius-element);
+   font-size: 14px;
+   margin-bottom: 20px;
+   text-align: center;
+   font-weight: 500;
+}
+
+/* ==========================================================================
+   ДОПОЛНИТЕЛЬНЫЕ ЭФФЕКТЫ И СТРАНИЦА ВХОДА
+   ========================================================================== */
+body:has(.login-card) {
+   background-color: var(--color-white) !important;
+}
+
+.login-card {
+   background-color: var(--color-block-bg) !important;
+   border: 1px solid var(--color-pink-main) !important;
+}
+
+.personal-greeting {
+   background-color: var(--color-green-accent);
+   padding: 24px 30px;
+   border-radius: var(--radius-element);
+   border: 1px solid rgba(92, 74, 67, 0.12);
+   font-size: 26px;
+   font-weight: 400;
+   line-height: 1.35;
+   color: var(--color-brown-text);
+   text-align: center;
+   margin-bottom: 45px;
+   box-shadow: 0 6px 20px rgba(209, 226, 211, 0.35);
+   display: inline-block;
+   width: 100%;
+   letter-spacing: -0.02em;
+}
+
+.success-message {
+   display: none;
+   font-size: 18px;
+   font-weight: 600;
+   color: var(--color-brown-text);
+   margin-top: 30px;
+   text-align: center;
+}
+
+.reveal-block {
+   opacity: 0;
+   transform: translateY(30px);
+   transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1), transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+   will-change: opacity, transform;
+}
+
+.reveal-block.is-visible {
+   opacity: 1;
+   transform: translateY(0);
+}
+
+@keyframes appleFadeUp {
+   from {
+      opacity: 0;
+      transform: scale(0.97) translateY(15px);
+   }
+
+   to {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+   }
+}
+
+/* ==========================================================================
+    АДАПТИВНОСТЬ ДЛЯ СМАРТФОНОВ (экраны до 480px)
+   ========================================================================== */
 @media (max-width: 480px) {
-    /* Уменьшаем огромные отступы вокруг сайта, чтобы дать контенту простор */
-    body {
-        padding: 20px 10px;
-    }
+   body {
+      padding: 20px 10px;
+   }
 
-    /* Главная карточка: уменьшаем внутренний паддинг с 50px до 20px */
-    .invitation-card, .login-card, .admin-container {
-        padding: 24px 16px;
-        border-width: 3px; /* Чуть тоньше рамку для изящности */
-    }
+   .invitation-card,
+   .login-card,
+   .admin-container {
+      padding: 24px 16px;
+      border-width: 3px;
+   }
 
-    /* Исправление ломающихся и огромных заголовков */
-    h1 {
-        font-size: 34px; /* Уменьшаем, чтобы имена «Денис & Мария» не разрывались на 3 строки */
-        margin-bottom: 8px;
-    }
+   h1 {
+      font-size: 34px;
+      margin-bottom: 8px;
+   }
 
-    h2 {
-        font-size: 26px;
-        margin-bottom: 12px;
-    }
+   h2 {
+      font-size: 26px;
+      margin-bottom: 12px;
+   }
 
-    h3 {
-        font-size: 16px;
-        margin-bottom: 15px;
-    }
+   h3 {
+      font-size: 16px;
+      margin-bottom: 15px;
+   }
 
-    /* Блок персонального приветствия: уменьшаем текст и отступы */
-    .personal-greeting {
-        font-size: 22px;
-        padding: 16px 20px;
-        margin-bottom: 25px;
-    }
+   .personal-greeting {
+      font-size: 22px;
+      padding: 16px 20px;
+      margin-bottom: 25px;
+   }
 
-    /* Бэнто-блоки (таймер, программа, дресс-код) */
-    .timer-container, .bento-section, .details-section, .dresscode-section, .wishes-section {
-        padding: 16px; /* Вместо 26px, освобождаем место для текста */
-        margin-bottom: 20px;
-    }
+   .wishes-text-block {
+      font-size: 14px;
+      line-height: 1.4;
+   }
 
-    .details-section p, .dresscode-text-block p {
-        font-size: 14px; /* Слегка уменьшаем текст, чтобы строки не были обрубками */
-        line-height: 1.4;
-    }
+   .timer-container,
+   .bento-section,
+   .details-section,
+   .dresscode-section,
+   .wishes-section {
+      padding: 16px;
+      margin-bottom: 20px;
+   }
 
-    /* Адаптация таймера: уменьшаем расстояния */
-    .timer-countdown {
-        gap: 12px; /* Меньше расстояние между днями/часами/минутами */
-    }
+   .details-section p,
+   .dresscode-text-block p
+   {
+      font-size: 14px;
+      line-height: 1.4;
+   }
 
-    .timer-number {
-        font-size: 24px; /*Montserrat теперь аккуратно встанет в ряд */
-    }
+   .timer-countdown {
+      gap: 12px;
+   }
 
-    .timer-label {
-        font-size: 10px;
-    }
+   .timer-number {
+      font-size: 24px;
+   }
 
-    /* Кнопки и инпуты: делаем компактнее */
-    input[type="text"], input[type="password"], .login-input, select, textarea, button {
-        padding: 12px 14px;
-        font-size: 14px;
-    }
+   .timer-label {
+      font-size: 10px;
+   }
 
-    /* Оптимизация анимации для мобильных (без тяжелого scale) */
-    @keyframes appleFadeUp {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
+   input[type="text"],
+   input[type="password"],
+   .login-input,
+   select,
+   textarea,
+   button {
+      padding: 12px 14px;
+      font-size: 14px;
+   }
 
-    /* Принудительно показываем reveal-блоки, если мобильный браузер блокирует JS */
-    .reveal-block {
-        opacity: 1 !important;
-        transform: none !important;
-        transition: none !important;
-    }
+   @keyframes appleFadeUp {
+      from {
+         opacity: 0;
+         transform: translateY(10px);
+      }
+
+      to {
+         opacity: 1;
+         transform: translateY(0);
+      }
+   }
+
+   .reveal-block {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+   }
 }

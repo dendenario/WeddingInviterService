@@ -7,7 +7,7 @@
 
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com" rel="stylesheet">
 
     <link th:href="@{/css/wedding.css}" rel="stylesheet">
 </head>
@@ -17,9 +17,8 @@
     <!-- Персональное приветствие в виде явного акцентного блока -->
     <div class="personal-greeting">
         Рады приветствовать вас,<br>
-        <span th:text="${guestName}">Имя Гостя</span>!
+        <div th:text="${guestName + '!'}">Имя Гостя</div>
     </div>
-
 
     <h1>Денис & Мария</h1>
     <div class="subtitle">Приглашение на свадьбу</div>
@@ -50,15 +49,33 @@
         </div>
     </div>
 
-    <!-- Детали проведения (Блок стал пастельным плиточным) -->
+    <!-- Детали проведения (Программа дня) -->
     <div class="details-section">
-        <div class="timer-title">Программа дня</div>
-        <p>📅 Дата торжества: <strong th:text="${weddingDate}">25 Сентября 2026</strong></p>
-        <p>🏰 Локация: <strong th:text="${weddingVenue}">Ресторан "Кедр"</strong></p>
-        <p>📍 Точный адрес: <span th:text="${weddingAddress}">Сосновая ул., Зайцево, Московская обл.</span></p>
+        <h3>Программа дня</h3>
+        <p>
+            <svg class="details-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Дата торжества: <strong th:text="${weddingDate}">25 Сентября 2026</strong>
+        </p>
+        <p>
+            <svg class="details-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 6L5 12v10h14V12L12 6z"/>
+                </path></svg>
+            Локация: <strong th:text="${weddingVenue}">Ресторан "Кедр"</strong>
+        </p>
+        <p>
+            <svg class="details-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Точный адрес: <span th:text="${weddingAddress}">Сосновая ул., Зайцево, Московская обл.</span>
+        </p>
 
         <div class="map-container">
-            <!-- Прямое обращение по вашей ссылке с зумом z=19 -->
             <iframe th:src="@{https://yandex.ru/map-widget/v1/(mode='search',z=19,text=${weddingVenue + ' ' + weddingAddress})}"
                     width="100%"
                     height="280"
@@ -68,7 +85,7 @@
         </div>
     </div>
 
-    <!-- Блок дресс-кода (Блок стал пастельным плиточным) -->
+    <!-- Блок дресс-кода -->
     <div class="dresscode-section">
         <div class="photo-block">
             <img th:src="@{/images/dresscode.jpg}" alt="Палитра дресс-кода" class="wedding-img">
@@ -78,18 +95,16 @@
         </div>
     </div>
 
-    <!-- Для пожеланий (выводим чистый текст, обернутый в класс списков): -->
-    <div class="wishes-section reveal-block">
+    <!-- Блок пожеланий по подаркам -->
+    <div class="wishes-section">
         <h3>Пожелания по подаркам</h3>
-        <ul class="wishes-list" th:utext="${wishesText}">
-            <!-- Сюда из БД должны приходить только теги <li>Текст</li> -->
-        </ul>
+        <div class="wishes-text-block" th:utext="${wishesText}">
+            <!-- Обычный текст из БД -->
+        </div>
     </div>
-
 
     <!-- Форма ответов -->
     <div id="formContainer" th:if="${!completedRsvp}">
-        <!-- Добавьте эту строку внутрь формы -->
         <h3>Анкета гостя</h3>
         <form id="rsvpForm" th:data-token="${guestToken}">
             <label class="checkbox-container">
@@ -98,7 +113,7 @@
             </label>
 
             <div>
-                <select id="alcohol">
+                <label for="alcohol"></label><select id="alcohol">
                     <option value="Не определено">Предпочтения по напиткам</option>
                     <option value="Крепкие напитки">Предпочитаю крепкие напитки</option>
                     <option value="Не крепкие напитки">Предпочитаю легкие/не крепкие напитки</option>
@@ -121,12 +136,11 @@
 
     <div id="successMessage" class="success-message">
         <p>✨ Ваш ответ успешно сохранен!</p>
-        <p style="font-size: 1rem; font-family: 'Montserrat', sans-serif; margin-top: 10px; color: var(--text-brown); opacity: 0.9;">
+        <p style="margin-top: 10px; opacity: 0.9;">
             Спасибо, что будете с нами в этот важный день.
         </p>
     </div>
 </div>
-
 
 <script th:src="@{/js/wedding.js}" defer></script>
 
